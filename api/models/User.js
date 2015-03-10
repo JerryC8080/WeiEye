@@ -1,6 +1,8 @@
 var User = {
   // Enforce model schema in the case of schemaless databases
   schema: true,
+  tableName   : 'users',
+  identity    : 'User',
 
   attributes: {
     username  : { type: 'string', unique: true },
