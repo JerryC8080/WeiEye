@@ -12,8 +12,8 @@ module.exports = {
   identity    : 'Administrator',
 
   attributes: {
-    username: {type: 'string', minLength: 8},
-    password: {type: 'string', minLength: 8}
+    username: {type: 'string', minLength: 8, require: true, unique: true},
+    password: {type: 'string', minLength: 8, require: true}
   }
 };
 

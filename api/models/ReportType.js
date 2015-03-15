@@ -7,8 +7,13 @@
 
 module.exports = {
 
-  attributes: {
+  schema      : true,
+  tableName   : 'report_types',
+  identity    : 'ReportType',
 
+  attributes: {
+    name        : {type: 'string', unique: true, require: true},   // 报告名称
+    description : {type: 'string'}    // 报告描述
   }
 };
 
