@@ -26,7 +26,7 @@ module.exports = {
     attitudes_count   : {type: 'integer', require: true, defaultsTo: 0},  // 表态数
     geo               : {model: 'Geo'},     // 地理信息
     user              : {model: 'User', require: true},    // 微博作者
-    retweeted_status  : {model: 'Post'}     // 被转发的原微博信息字段，当该微博为转发微博时返回
+    retweeted_status  : {model: 'Status'}     // 被转发的原微博信息字段，当该微博为转发微博时返回
   }
 };
 

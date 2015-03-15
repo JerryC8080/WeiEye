@@ -6,6 +6,7 @@
   "keywords": [],
   "dependencies": {
     "bcryptjs": "^2.1.0",
+    "bluebird": "^2.9.14",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -26,6 +27,7 @@
     "rc": "~0.5.0",
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
+    "superagent": "^1.1.0",
     "validator": "^3.33.0"
   },
   "scripts": {
@@ -38,5 +40,9 @@
     "url": "git://github.com/JerryC/WeiEye.git"
   },
   "author": "JerryC",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "should": "^5.2.0"
+  }
 }
