@@ -18,8 +18,14 @@ module.exports = {
  * Download status data from weibo API
  * @param ID
  */
-function downloadStatusInfo(ID) {
-
+function downloadStatusInfo(user, ID) {
+  return WeiboSDK.showStatus(user, ID).then(function (resBody) {
+    // pick attributes what is require from resBody
+    var newStatus = _.pick(resBody, _.keys(Status.attributes));
+    newStatus.user = newStatus.user.id;
+    delete newStatus.geo;
+    return Status.create(newStatus);
+  })
 }
 
 /**

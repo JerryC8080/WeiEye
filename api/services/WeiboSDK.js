@@ -11,7 +11,8 @@
  * Constant goes here
  */
 var API_URL = {
-  statuses_queryid : 'https://api.weibo.com/2/statuses/queryid.json'
+  statuses_queryid : 'https://api.weibo.com/2/statuses/queryid.json',
+  statuses_show    : 'https://api.weibo.com/2/statuses/show.json'
 };
 
 /**
@@ -38,22 +39,11 @@ function queryID(user, MID, type, isBase62) {
     if (!access_token){
       throw new Error('get access_token failed');
     }
-    return new Promise(function (resolve, reject) {
-      request
-        .get(API_URL.statuses_queryid)
-        .query({
-          access_token  : access_token,
-          mid           : MID,
-          type          : type,
-          isBase62      : isBase62
-        })
-        .set('Accept', 'application/json')
-        .end(function(err, res){
-          if (err){
-            reject(err);
-          }
-          resolve(res.body);
-        });
+    return requestGet(API_URL.statuses_queryid, {
+      access_token  : access_token,
+      mid           : MID,
+      type          : type,
+      isBase62      : isBase62
     });
   });
 }
@@ -64,7 +54,12 @@ function queryID(user, MID, type, isBase62) {
  * @param ID
  */
 function showStatus(user, ID) {
-
+  return getAccessToken(user).then(function (access_token) {
+    return requestGet(API_URL.statuses_show, {
+      access_token  : access_token,
+      id            : ID
+    });
+  });
 }
 
 /**
@@ -78,4 +73,47 @@ function getAccessToken(user) {
     }
     return  access_token = passport.tokens.accessToken;
   });
+}
+
+/**
+ * Http request of get method
+ * @param url
+ * @param data
+ * @returns {bluebird}
+ */
+function requestGet(url, data) {
+  return new Promise(function (resolve, reject) {
+    request
+      .get(url)
+      .query(data)
+      .set('Accept', 'application/json')
+      .end(function(err, res){
+        if (err){
+          reject(err);
+        }
+        resolve(res.body);
+      });
+  });
+}
+
+/**
+ * Http request of post method
+ * @param url
+ * @param data
+ */
+function requestPost(url, data) {
+  function requestGet(url, data) {
+    return new Promise(function (resolve, reject) {
+      request
+        .post(url)
+        .send(data)
+        .set('Accept', 'application/json')
+        .end(function(err, res){
+          if (err){
+            reject(err);
+          }
+          resolve(res.body);
+        });
+    });
+  }
 }
