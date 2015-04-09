@@ -12,6 +12,7 @@ module.exports = {
   identity    : 'Status',
 
   attributes: {
+    id                : { type: 'string', unique: true, primaryKey: true},
     mid               : {type: 'string', unique: true},   // 微博的MID
     idstr             : {type: 'string', unique: true},   // 字符串型的微博ID
     text              : {type: 'string'},   // 微博信息内容

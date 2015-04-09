@@ -18,6 +18,7 @@ describe('DataService', function () {
         sails.log.info('A status created, id :' + status.id);
         done();
       }).catch(function (err) {
+        sails.log.info(err);
         done(err);
       });
     });

@@ -56,6 +56,7 @@ function formatProfile(provider, profile) {
 
     case 'sina':
       user = _.pick(profile, ['location', 'description']);
+      user.id = profile.id;
       user.username = profile.name;
       user.website = profile.url;
       user.description = profile.description;

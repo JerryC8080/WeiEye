@@ -23,6 +23,7 @@ function downloadStatusInfo(user, ID) {
     // pick attributes what is require from resBody
     var newStatus = _.pick(resBody, _.keys(Status.attributes));
     newStatus.user = newStatus.user.id;
+    sails.log.info(newStatus);
     delete newStatus.geo;
     return Status.create(newStatus);
   })

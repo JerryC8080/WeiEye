@@ -5,6 +5,7 @@ var User = {
   identity    : 'User',
 
   attributes: {
+    id        : { type: 'string', unique: true, primaryKey: true},
     username  : { type: 'string', unique: true },
     email     : { type: 'email',  unique: true },
     passports : { collection: 'Passport', via: 'user' }
