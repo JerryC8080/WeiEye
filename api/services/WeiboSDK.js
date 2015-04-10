@@ -4,15 +4,16 @@
  * @author JerryC
  * @date  15/3/15
  * @description
- *
+ * 封装微博API接口，返回接口的数据
  */
 
 /**
  * Constant goes here
  */
 var API_URL = {
-  statuses_queryid : 'https://api.weibo.com/2/statuses/queryid.json',
-  statuses_show    : 'https://api.weibo.com/2/statuses/show.json'
+  statuses_queryid      : 'https://api.weibo.com/2/statuses/queryid.json',
+  statuses_show         : 'https://api.weibo.com/2/statuses/show.json',
+  comments_show_batch   : 'https://api.weibo.com/2/comments/show_batch.json'
 };
 
 /**
@@ -22,8 +23,9 @@ var Promise = require("bluebird"),
     request = require("superagent");
 
 module.exports = {
-  queryID       : queryID,
-  showStatus    : showStatus
+  queryID           : queryID,
+  showStatus        : showStatus,
+  showCommentsBatch : showCommentsBatch
 };
 
 /**
@@ -60,6 +62,20 @@ function showStatus(user, ID) {
       id            : ID
     });
   });
+}
+
+/**
+ * Show comments with batch
+ * @param user
+ * @param commentIDs
+ */
+function showCommentsBatch(user, commentIDs) {
+  return getAccessToken(user).then(function (access_token) {
+    return requestGet(API_URL.comments_show_batch, {
+      access_token  : access_token,
+      cids          : commentIDs
+    })
+  })
 }
 
 /**
@@ -102,18 +118,16 @@ function requestGet(url, data) {
  * @param data
  */
 function requestPost(url, data) {
-  function requestGet(url, data) {
-    return new Promise(function (resolve, reject) {
-      request
-        .post(url)
-        .send(data)
-        .set('Accept', 'application/json')
-        .end(function(err, res){
-          if (err){
-            reject(err);
-          }
-          resolve(res.body);
-        });
-    });
-  }
+  return new Promise(function (resolve, reject) {
+    request
+      .post(url)
+      .send(data)
+      .set('Accept', 'application/json')
+      .end(function(err, res){
+        if (err){
+          reject(err);
+        }
+        resolve(res.body);
+      });
+  });
 }

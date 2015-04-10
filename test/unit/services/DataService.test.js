@@ -9,13 +9,14 @@
 
 var bootstrap = require('../../bootstrap.test.js');
 var should = require('should');
+var USER   = 2254858394;
 
 describe('DataService', function () {
   describe('#downloadStatusInfo', function () {
     it('should return the status obj', function (done) {
-      var ID = 3634396802717902;
-      DataService.downloadStatusInfo(1, 3634396802717902).then(function (status) {
-        sails.log.info('A status created, id :' + status.id);
+      var ID = 3806864175528167;
+      DataService.downloadStatusInfo(USER, ID).then(function (status) {
+        sails.log.info('A status created or updated, id :' + status.id);
         done();
       }).catch(function (err) {
         sails.log.info(err);
