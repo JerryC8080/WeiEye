@@ -22,7 +22,7 @@ var User = {
     friends_count       : { type: 'integer' },  // 关注数
     statuses_count      : { type: 'integer' },  // 微博数
     favourites_count    : { type: 'integer' },  // 收藏数
-    created_at          : { type: 'date' },   // 用户创建（注册）时间
+    created_at          : { type: 'datetime' },   // 用户创建（注册）时间
     verified            : { type: 'boolean' },  // 是否是微博认证用户，即加V用户，true：是，false：否
     avatar_large        : { type: 'string' }, // 用户头像地址（大图），180×180像素
     avatar_hd           : { type: 'string' }, // 用户头像地址（高清），高清头像原图
