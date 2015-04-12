@@ -8,11 +8,12 @@
  */
 
 /**
- * Constant goes here
+ * Constant for api url goes here
  */
 var API_URL = {
   statuses_queryid      : 'https://api.weibo.com/2/statuses/queryid.json',
   statuses_show         : 'https://api.weibo.com/2/statuses/show.json',
+  comments_show         : 'https://api.weibo.com/2/comments/show.json',
   comments_show_batch   : 'https://api.weibo.com/2/comments/show_batch.json'
 };
 
@@ -23,9 +24,10 @@ var Promise = require("bluebird"),
     request = require("superagent");
 
 module.exports = {
-  queryID           : queryID,
-  showStatus        : showStatus,
-  showCommentsBatch : showCommentsBatch
+  queryID               : queryID,
+  showStatus            : showStatus,
+  showCommentsOfStatus  : showCommentsOfStatus,
+  showCommentsBatch     : showCommentsBatch
 };
 
 /**
@@ -60,6 +62,20 @@ function showStatus(user, ID) {
     return requestGet(API_URL.statuses_show, {
       access_token  : access_token,
       id            : ID
+    });
+  });
+}
+
+/**
+ * Show comments with status ID
+ * @param user
+ * @param statusID
+ */
+function showCommentsOfStatus(user, statusID) {
+  return getAccessToken(user).then(function (access_token) {
+    return requestGet(API_URL.comments_show, {
+      access_token  : access_token,
+      id            : statusID
     });
   });
 }

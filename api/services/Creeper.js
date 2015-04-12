@@ -31,6 +31,7 @@ function creepStatus(user, statusUrl) {
 
       // creep status from statusUrl
       Utils.requestGet(statusUrl).then(function (data) {
+        // TODO Analyze the html and get information what's we need
         var $ = cheerio.load(data.text);
         resolve(text);
       })

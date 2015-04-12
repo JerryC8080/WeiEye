@@ -34,7 +34,7 @@ describe('WeiboSDK', function () {
    */
   describe('#showStatus', function () {
     it('should return status info', function (done) {
-      var ID = 3806864175528167;
+      var ID = 3634396802717902;
       WeiboSDK.showStatus(USER, ID).then(function (resBody) {
         sails.log.info('the status \' ' + ID + '\' content goes here : ');
         sails.log.info(resBody);
@@ -42,7 +42,24 @@ describe('WeiboSDK', function () {
       }).catch(function (err) {
         sails.log.error(err);
         done(err);
+      });
+    });
+  });
+
+
+  /**
+   * Test for WeiboSDK.showCommentsOfStatus
+   */
+  describe('#showCommentsOfStatus', function () {
+    it('should return comments info', function (done) {
+      var statusID = 3521985244406108;
+      WeiboSDK.showCommentsOfStatus(USER, statusID).then(function (resBody) {
+        sails.log.info('the comments of status \'' + statusID + '\' goes here :');
+        sails.log.info(resBody);
+        done();
+      }).catch(function (err) {
+        done(err);
       })
-    })
-  })
+    });
+  });
 });

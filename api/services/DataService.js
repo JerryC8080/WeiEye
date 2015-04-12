@@ -6,16 +6,18 @@
  * @description
  * In charge of download data from Weibo API into the local database
  */
+var Promise = require("bluebird");
 
 module.exports = {
-  downloadStatusInfo : downloadStatusInfo,
-  downloadComments   : downloadComments,
-  downloadRepost     : downloadRepost,
-  translateMIDToID   : translateMIDToID
+  downloadStatusInfo          : downloadStatusInfo,
+  downloadCommentsOfStatus    : downloadCommentsOfStatus,
+  downloadRepost              : downloadRepost,
+  translateMIDToID            : translateMIDToID
 };
 
 /**
  * Download status data from weibo API
+ * @param user
  * @param ID
  */
 function downloadStatusInfo(user, ID) {
@@ -31,7 +33,7 @@ function downloadStatusInfo(user, ID) {
     var newStatus = _.pick(resBody, _.keys(Status.attributes));
     newStatus.user = newStatus.user.id;
 
-    sails.log.info('An new status will be create:');
+    sails.log.info('An new status will be created:');
     sails.log.info(newStatus);
 
     // delete attributes didn't need
@@ -61,10 +63,71 @@ function downloadStatusInfo(user, ID) {
 
 /**
  * Download comments data from weibo API
- * @param ID
+ * @param user
+ * @param statusID
  */
-function downloadComments(ID) {
+function downloadCommentsOfStatus(user, statusID) {
+  sails.log.info('DataService.downloadComments:');
+  return WeiboSDK.showCommentsOfStatus(user, statusID).then(function (resBody) {
 
+    // if resBody not found , throw an error
+    if (!resBody){
+      throw new Error('the resBody was not found');
+    }
+
+    // if resBody.comments not found , throw an error
+    if (!resBody.comments){
+      throw new Error('the resBody did not has comments attribute');
+    }
+
+    // push an comments array of resBody.comments for create
+    var comments = [];
+    var users    = [];
+    _.map(resBody.comments, function (comment) {
+      var newComments = _.pick(comment, _.keys(Comment.attributes));
+      var newUser     = _.pick(newComments.user, _.keys(User.attributes));
+      newComments.user = newComments.user.id;
+      newComments.status = newComments.status.id;
+      if (newComments.reply_comment){
+        newComments.reply_comment = newComments.reply_comment.id;
+      }
+      comments.push(newComments);
+      users.push(newUser);
+    });
+
+    // update or create user of comments
+    return Promise.map(users, function (user) {
+      var _user = user;
+      return User.find(user.id).then(function (user) {
+
+        // if user is not exist , create it
+        if (!user){
+          return User.create(_user);
+        }
+
+        // if user is exist , update it
+        return User.update({id: _user.id}, _user).then(function (users) {
+          return users[0];
+        });
+      })
+    }).then(function (users) {
+      sails.log.info('Users create goes here:');
+      _.map(users, function (user) {
+        sails.log.info(user.name);
+      });
+
+      // find or create comments
+      return Promise.map(comments, function (comment) {
+        return Comment.findOrCreate(comment.id , comment);
+      });
+    }).then(function (comments) {
+      sails.log.info('The comments created or found goes here: ');
+      _.map(comments, function (comment) {
+        sails.log.info(comment.text);
+      });
+      return comments;
+    });
+  });
 }
 
 /**

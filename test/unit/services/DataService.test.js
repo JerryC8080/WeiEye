@@ -24,4 +24,19 @@ describe('DataService', function () {
       });
     });
   });
+
+  describe('#downloadCommentsOfStatus', function () {
+    it('should return the comments of status which given by id', function (done) {
+      var statusID = 3521985244406108;
+      DataService.downloadCommentsOfStatus(USER, statusID).then(function (comments) {
+        sails.log.info('The comments of status \'' + statusID + '\' has been saved:');
+        sails.log.info(comments);
+        done();
+      }).catch(function (err) {
+        sails.log.info(err);
+        done(err);
+      })
+    });
+  });
 });
+
