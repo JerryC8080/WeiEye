@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2014 Meizu bigertech, All rights reserved.
- * http://www.bigertech.com/
+ * Copyright (c) 2014 JerryC, All rights reserved.
+ * http://www.huang-jerryc.com/
  * @author JerryC
  * @date  15/4/10
  * @description

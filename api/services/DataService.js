@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2014 Meizu bigertech, All rights reserved.
- * http://www.bigertech.com/
+ * Copyright (c) 2014 JerryC, All rights reserved.
+ * http://www.huang-jerryc.com/
  * @author JerryC
  * @date  15/3/14
  * @description
@@ -11,8 +11,7 @@ var Promise = require("bluebird");
 module.exports = {
   downloadStatusInfo          : downloadStatusInfo,
   downloadCommentsOfStatus    : downloadCommentsOfStatus,
-  downloadRepost              : downloadRepost,
-  translateMIDToID            : translateMIDToID
+  downloadRepost              : downloadRepost
 };
 
 /**
@@ -138,12 +137,4 @@ function downloadRepost(ID) {
 
 }
 
-/**
- * Send request to remote in order to translate status's MID to ID
- * @param statusMID
- * @returns {id}
- */
-function translateMIDToID(statusMID) {
-  return id;
-}
 
