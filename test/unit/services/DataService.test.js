@@ -12,7 +12,7 @@ var should = require('should');
 var USER   = 2254858394;
 
 describe('DataService', function () {
-  describe('#downloadStatusInfo', function () {
+  describe.skip('#downloadStatusInfo', function () {
     it('should return the status obj', function (done) {
       var ID = 3806864175528167;
       DataService.downloadStatusInfo(USER, ID).then(function (status) {

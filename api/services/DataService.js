@@ -97,7 +97,7 @@ function downloadCommentsOfStatus(user, statusID) {
     // update or create user of comments
     return Promise.map(users, function (user) {
       var _user = user;
-      return User.find(user.id).then(function (user) {
+      return User.findOne(_user.id).then(function (user) {
 
         // if user is not exist , create it
         if (!user){

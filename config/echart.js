@@ -16,6 +16,10 @@ module.exports.echart = {
         text: '用户性别分析报告',
         x:'center'
       },
+      tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
       legend: {
         orient : 'vertical',
         x : 'left',
