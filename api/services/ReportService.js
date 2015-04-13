@@ -16,7 +16,7 @@ module.exports = {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  */
-function generateGenderReport(statusID, type) {
+function generateGenderReport(statusID, type, sessionUser) {
   sails.log.info('ReportService.generateGenderReport:');
   return new Promise(function (resolve, reject) {
 
@@ -59,7 +59,8 @@ function generateGenderReport(statusID, type) {
         target      : 1,
         data        : JSON.stringify(pieTpl),
         status      : statusID,
-        reportType  : sails.config.report.report_types.user_gender.id
+        reportType  : sails.config.report.report_types.user_gender.id,
+        creater     : sessionUser
       };
       Report.create(newReport).then(function (report) {
         if (!report){
