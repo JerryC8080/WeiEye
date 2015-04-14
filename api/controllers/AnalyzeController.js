@@ -6,17 +6,12 @@
  */
 
 module.exports = {
-	analyze: analyze,
-  socketTest: socketTest
+	analyze: analyze
 };
 
 /**
  * Analyze Report
  * @param req
- * req.query: {
- *  statusMID
- *  target
- * }
  * @param res
  */
 function analyze(req, res) {
@@ -108,19 +103,6 @@ function analyze(req, res) {
       msg: err.message
     });
   });
-}
-
-function socketTest(req, res) {
-  if (!req.isSocket) return res.badRequest();
-
-  var socketId = sails.sockets.id(req.socket);
-  sails.log.info('socket id : ' + socketId);
-
-  sails.sockets.emit(socketId, 'hi', {msg: 'hi'});
-  sails.sockets.emit(socketId, 'hi', {msg: 'hello'});
-
-
-  return res.ok('My socket ID is: ' + socketId);
 }
 
 /**
