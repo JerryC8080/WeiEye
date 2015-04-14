@@ -51,7 +51,7 @@ function analyze(req, res) {
   WeiboSDK.queryID(user, MID, type, 1).then(function (resBody) {
     statusID = resBody.id;
     if (!statusID){
-      return emitAnalyzeMsg(socketID, {status: 500, msg: '分析链接失败'});
+      throw new Error('分析链接失败');
     }
 
     sails.log.info('分析链接完毕, statusID : ', statusID);
@@ -61,6 +61,9 @@ function analyze(req, res) {
     emitAnalyzeMsg(socketID, {status: 200, msg: '下载微博数据...'});
     return DataService.downloadStatusInfo(user, statusID)
   }).then(function (status) {
+    if (!status){
+      throw new Error('下载微博数据失败');
+    }
     emitAnalyzeMsg(socketID, {status: 200, msg: '下载微博数据完毕'});
     sails.log.info('下载微博数据完毕 : \n', status);
 
@@ -74,6 +77,9 @@ function analyze(req, res) {
     // TODO if type equal 2, it means repost , download it
 
   }).then(function (objs) {
+    if (!objs){
+      throw new Error('下载评论数据失败');
+    }
     if (type === 1){
       emitAnalyzeMsg(socketID, {status: 200, msg: '下载评论数据完毕'});
       sails.log.info('下载评论数据完毕 : \n', objs);
@@ -87,6 +93,9 @@ function analyze(req, res) {
     emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户分析报告...'});
     return ReportService.generateGenderReport(statusID, type, user);
   }).then(function (report) {
+    if (!report){
+      throw new Error('分析并生成评论用户分析报告失败');
+    }
     emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户分析报告完毕'});
     sails.log.info('分析并生成报告完毕 : \n', report);
 
@@ -94,7 +103,10 @@ function analyze(req, res) {
     res.ok({report: report});
   }).catch(function (err) {
     sails.log.error(err);
-    res.serverError(err);
+    res.serverError({
+      status: 500,
+      msg: err.message
+    });
   });
 }
 
