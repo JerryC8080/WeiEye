@@ -1,0 +1,21 @@
+<script>
+    function getAnalyze() {
+        var statusUrl = 'http://weibo.com/2254858394/z9dW4iueg';
+        var socket = io.socket;
+        socket.on('analyze_msg', function (response) {
+            if (response && response.status === 200){
+                console.log(response.msg);
+            }
+        });
+        socket.get('/analyze-test', {
+            statusUrl: statusUrl,
+            type: 1
+        }, function (resData) {
+            console.log(resData);
+            console.log(resData.report);
+        });
+    }
+</script>
+
+<button onclick="getAnalyze()">发起分析请求</button>
+

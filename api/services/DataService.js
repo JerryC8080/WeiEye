@@ -17,11 +17,11 @@ module.exports = {
 /**
  * Download status data from weibo API
  * @param user
- * @param ID
+ * @param statusID
  */
-function downloadStatusInfo(user, ID) {
+function downloadStatusInfo(user, statusID) {
   sails.log.info('DataService.downloadStatusInfo :');
-  return WeiboSDK.showStatus(user, ID).then(function (resBody) {
+  return WeiboSDK.showStatus(user, statusID).then(function (resBody) {
 
     // if resBody not found , throw an error
     if (!resBody){

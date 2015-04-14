@@ -65,6 +65,8 @@ module.exports.routes = {
    * Test Routes
    */
   'get /socket-test': 'AnalyzeController.socketTest',
-  'get /socket-test-page': {view: 'examples/socket-test'}
+  'get /socket-test-page': {view: 'examples/socket-test'},
+  'get /analyze-test': 'AnalyzeController.analyze',
+  'get /analyze-test-page': {view: 'examples/analyze-test'}
 
 };
