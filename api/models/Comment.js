@@ -4,6 +4,7 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
+var cheerio = require("cheerio");
 
 module.exports = {
 
@@ -21,6 +22,17 @@ module.exports = {
     user          : {model: 'User', required: true},      // 评论作者
     status        : {model: 'Status', required: true},    // 评论的微博
     reply_comment : {model: 'Comment'}    // 评论的来源评论，当本评论属于对另一评论的回复时返回此字段
+  },
+
+  beforeCreate: function (values, next) {
+
+    // Take text within <a> of source attribute
+    // TODO using regular way
+    var source = values.source;
+    if (source){
+      values.source = cheerio.load(source)('a').text();
+    }
+    next();
   }
 };
 

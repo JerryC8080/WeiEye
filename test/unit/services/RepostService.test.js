@@ -21,5 +21,15 @@ describe('ReportService', function () {
       });
     });
   });
+
+  describe('#generateSourceReport', function () {
+    it('it should be return source report of given status', function (done) {
+      ReportService.generateSourceReport(STATUS, 1, 2254858394).then(function (report) {
+        done();
+      }).catch(function (err) {
+        done(err);
+      });
+    });
+  });
 });
 
