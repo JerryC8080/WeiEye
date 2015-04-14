@@ -44,6 +44,11 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
+
+
+  /**
+   * Auth Routes
+   */
   'get /login': 'AuthController.login',
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',
@@ -54,5 +59,12 @@ module.exports.routes = {
   'get /auth/:provider': 'AuthController.provider',
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
+
+
+  /**
+   * Test Routes
+   */
+  'get /socket-test': 'AnalyzeController.socketTest',
+  'get /socket-test-page': {view: 'examples/socket-test'}
 
 };

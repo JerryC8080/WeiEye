@@ -6,7 +6,8 @@
  */
 
 module.exports = {
-	analyze: analyze
+	analyze: analyze,
+  socketTest: socketTest
 };
 
 /**
@@ -49,5 +50,18 @@ function analyze(req, res) {
    * Use:
    * Report.find(where).then(result)
    */
+}
+
+function socketTest(req, res) {
+  if (!req.isSocket) return res.badRequest();
+
+  var socketId = sails.sockets.id(req.socket);
+  sails.log.info('socket id : ' + socketId);
+
+  sails.sockets.emit(socketId, 'hi', {msg: 'hi'});
+  sails.sockets.emit(socketId, 'hi', {msg: 'hello'});
+
+
+  return res.ok('My socket ID is: ' + socketId);
 }
 
