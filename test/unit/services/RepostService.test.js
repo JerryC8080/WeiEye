@@ -32,9 +32,19 @@ describe('ReportService', function () {
     });
   });
 
-  describe.only('#generateVerifyReport', function () {
+  describe('#generateVerifyReport', function () {
     it('it should be return source report of given status', function (done) {
       ReportService.generateVerifyReport(STATUS, 1, 2254858394).then(function (report) {
+        done();
+      }).catch(function (err) {
+        done(err);
+      });
+    });
+  });
+
+  describe('#generateTimelineReport', function () {
+    it('it should be return timeline report of given status', function (done) {
+      ReportService.generateTimelineReport(STATUS, 1, 2254858394).then(function (report) {
         done();
       }).catch(function (err) {
         done(err);

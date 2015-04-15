@@ -66,7 +66,7 @@ function downloadStatusInfo(user, statusID) {
  * @param statusID
  */
 function downloadCommentsOfStatus(user, statusID) {
-  sails.log.info('DataService.downloadComments:');
+  sails.log.info('DataService.downloadCommentsOfStatus:');
   return WeiboSDK.showCommentsOfStatus(user, statusID).then(function (resBody) {
 
     // if resBody not found , throw an error

@@ -100,7 +100,7 @@ function analyze(req, res) {
     sails.log.error(err);
     res.serverError({
       status: 500,
-      msg: err.message
+      msg: err.message || '未知错误'
     });
   });
 }

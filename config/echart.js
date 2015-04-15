@@ -155,7 +155,56 @@ module.exports.echart = {
           data: [12,21,10,4,12,5,6,5,25,23,7,10]
         }
       ]
-    }
+    },
 
-}
+    // 面积图
+    'area': {
+      title : {
+        text: '雨量流量关系图',
+        x: 'center'
+      },
+      tooltip : {
+        trigger: 'axis'
+        /*
+        formatter: function(params) {
+          return params[0].name + '<br/>'
+            + params[0].seriesName + ' : ' + params[0].value + ' (m^3/s)<br/>'
+        }
+        */
+      },
+      dataZoom : {
+        show : true,
+        realtime : true,
+        start : 0,
+        end : 100
+      },
+      xAxis : [
+        {
+          type : 'category',
+          boundaryGap : false,
+          axisLine: {onZero: false},
+          data : [
+            '2009/6/12 2:00', '2009/6/12 3:00',
+          ]
+        }
+      ],
+      yAxis : [
+        {
+          name : '流量(m^3/s)',
+          type : 'value',
+          max : 500
+        }
+      ],
+      series : [
+        {
+          name:'流量',
+          type:'line',
+          itemStyle: {normal: {areaStyle: {type: 'default'}}},
+          data:[
+            0.97,0.96
+          ]
+        }
+      ]
+    }
+  }
 };
