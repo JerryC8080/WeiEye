@@ -12,7 +12,8 @@ var reportTemplates = sails.config.echart.templates,
 
 module.exports = {
   generateGenderReport: generateGenderReport,
-  generateSourceReport: generateSourceReport
+  generateSourceReport: generateSourceReport,
+  generateVerifyReport: generateVerifyReport
 };
 
 /**
@@ -113,6 +114,52 @@ function generateSourceReport(statusID, type, sessionUser) {
 }
 
 /**
+ * Format data within database and create verify report on the database
+ * @param statusID
+ * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
+ * @param sessionUser
+ */
+function generateVerifyReport(statusID, type, sessionUser) {
+  sails.log.info('ReportService.generateVerifyReport:');
+  return new Promise(function (resolve, reject) {
+    getUserOfType(statusID, type).then(function (users) {
+      if (!users || users.length <= 0){
+        reject(new Error('can not find user by given status comments'));
+      }
+
+      // grouping user by verified
+      var userGroup = _.groupBy(users, 'verified');
+
+      // init report template
+      var ringPieTpl    = reportTemplates.ring_pie;
+      ringPieTpl.title.text  = '评论用户认证分析报告';
+      ringPieTpl.legend.data = ['已认证', '未认证'];
+      ringPieTpl.series[0].data = [
+        {value: userGroup['true'] && userGroup['true'].length || 0, name: '已认证'},
+        {value: userGroup['false'] && userGroup['false'].length || 0, name: '未认证'}
+      ];
+
+      // generate the new report
+      var newReport = {
+        type        : 1,
+        data        : JSON.stringify(ringPieTpl),
+        status      : statusID,
+        reportType  : reportTypes.user_verify.id,
+        creater     : sessionUser
+      };
+      Report.create(newReport).then(function (report) {
+        if (!report){
+          reject(new Error('can not create the new report'));
+        }
+        sails.log.info('A new report has been created:');
+        sails.log.info(report);
+        resolve(report);
+      });
+    });
+  });
+}
+
+/**
  * Get comments or retweeted status of the given type
  * @param statusID
  * @param type
@@ -141,6 +188,7 @@ function getCommentOrRetweetedStatus(statusID, type) {
     });
   });
 }
+
 
 /**
  * Get comments of the given status
