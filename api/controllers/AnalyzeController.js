@@ -5,19 +5,16 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-var typeText = {
-  '评论': 1,
-  '转发': 2
-};
-var reportTypes = sails.config.report.report_types;
-var reportTypesKeys = _.keys(reportTypes);
-var reportMethods = {
-  'user_source' : analyzeSourceport,
-  'user_geo'    : analyzeGeoReport,
-  'user_gender' : analyzeGenderReport,
-  'user_verify' : analyzeVerifyReport,
-  'timeline'    : analyzeTimelineReport
-};
+var typeText        = {'评论': 1, '转发': 2},
+    reportTypes     = sails.config.report.report_types,
+    reportTypesKeys = _.keys(reportTypes),
+    reportMethods   = {
+      'user_source' : analyzeSourceport,
+      'user_geo'    : analyzeGeoReport,
+      'user_gender' : analyzeGenderReport,
+      'user_verify' : analyzeVerifyReport,
+      'timeline'    : analyzeTimelineReport
+    };
 
 module.exports = {
 	analyze: analyze
@@ -37,7 +34,6 @@ function analyze(req, res) {
       statusUrl = req.body.statusUrl,
       type      = req.body.type;
 
-  sails.log.info(req.body);
   // Check login
   if (!user ){
     return res.badRequest('需要登录');
@@ -50,7 +46,6 @@ function analyze(req, res) {
 
   // exchange type into number
   type = typeText[type];
-
   sails.log.info('分析开始');
 
   // Get socket id if it's socket request
@@ -66,7 +61,6 @@ function analyze(req, res) {
     if (!statusID){
       throw new Error('分析链接失败');
     }
-
     sails.log.info('分析链接完毕, statusID : ', statusID);
     emitAnalyzeMsg(socketID, {status: 200, msg: '分析链接完毕'});
 
@@ -80,11 +74,7 @@ function analyze(req, res) {
     emitAnalyzeMsg(socketID, {status: 200, msg: '下载微博数据完毕'});
     sails.log.info('下载微博数据完毕 : \n', status);
 
-
     // If type equal 1 , it means comment
-    sails.log.info(user);
-    sails.log.info(statusID);
-    sails.log.info('type', type);
     if (type === 1){
       emitAnalyzeMsg(socketID, {status: 200, msg: '下载评论数据...'});
       return DataService.downloadCommentsOfStatus(user, statusID);
@@ -135,7 +125,7 @@ function analyze(req, res) {
     res.ok(responseData);
   }).catch(function (err) {
     sails.log.error(err);
-    res.serverError({
+    res.json({
       status: 500,
       msg: err.message || '未知错误'
     });
