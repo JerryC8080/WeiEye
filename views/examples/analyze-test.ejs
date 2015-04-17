@@ -1,5 +1,25 @@
 <script>
-    function getAnalyze() {
+    $(function () {
+        var logShow = $('#logShow');
+        io.socket.on('analyze_msg', function (response) {
+            if (response && response.status === 200){
+                var text = logShow.text();
+                logShow.text(text + '\n' + response.msg);
+                console.log(response.msg);
+            }
+        });
+
+        $('#form-analyze').submit(function (event) {
+            event.preventDefault();
+            logShow.text('');
+            $(this).socketForm(io.socket, function done(resData) {
+                console.log(resData);
+                console.log(resData.report);
+            });
+        });
+    });
+
+    function getAnalyze(data) {
         var statusUrl = 'http://weibo.com/2254858394/z9dW4iueg';
         var socket = io.socket;
         socket.on('analyze_msg', function (response) {
@@ -17,5 +37,27 @@
     }
 </script>
 
-<button onclick="getAnalyze()">发起分析请求</button>
+<!--<button onclick="getAnalyze()">发起分析请求</button>-->
+
+<form id="form-analyze" action="/analyze-test">
+    微博链接：<input type="text" name="statusUrl" placeholder="微博链接" value="http://weibo.com/2254858394/z9dW4iueg"/>
+    <br/>
+    性别分析报告：<input type="checkbox" name="user_source"/>
+    <br/>
+    来源分析报告：<input type="checkbox" name="user_geo"/>
+    <br/>
+    认证分析报告：<input type="checkbox" name="user_gender"/>
+    <br/>
+    时间曲线分析报告：<input type="checkbox" name="user_verify"/>
+    <br/>
+    地区分析报告：<input type="checkbox" name="timeline"/>
+    <br/>
+    <input type="text" name="type" value="评论"/>
+    <button type="submit">发起分析请求</button>
+</form>
+
+<br/>
+处理信息：
+<br/>
+<textarea id="logShow" rows="20" cols="100"></textarea>
 
