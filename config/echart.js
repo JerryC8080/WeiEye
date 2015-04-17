@@ -205,6 +205,55 @@ module.exports.echart = {
           ]
         }
       ]
+    },
+
+    // 地图
+    'map': {
+      title : {
+        text: 'iphone销量',
+        x:'center'
+      },
+      tooltip : {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        x:'left',
+        data:['iphone3']
+      },
+      dataRange: {
+        min: 0,
+        max: 10,
+        x: 'left',
+        y: 'bottom',
+        text:['高','低'],           // 文本，默认为数值文本
+        calculable : true
+      },
+      roamController: {
+        show: true,
+        x: 'right',
+        mapTypeControl: {
+          'china': true
+        }
+      },
+      series : [
+        {
+          name: 'iphone3',
+          type: 'map',
+          mapType: 'china',
+          roam: false,
+          itemStyle:{
+            normal:{label:{show:true}},
+            emphasis:{label:{show:true}}
+          },
+          data:[
+            {name: '北京',value: Math.round(Math.random()*1000)},
+            {name: '天津',value: Math.round(Math.random()*1000)},
+            {name: '上海',value: Math.round(Math.random()*1000)},
+            {name: '重庆',value: Math.round(Math.random()*1000)},
+          ]
+        }
+      ]
     }
   }
 };

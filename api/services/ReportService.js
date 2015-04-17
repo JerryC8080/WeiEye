@@ -13,10 +13,11 @@ var reportTemplates = sails.config.echart.templates,
     reportTypes     = sails.config.report.report_types;
 
 module.exports = {
-  generateGenderReport: generateGenderReport,
-  generateSourceReport: generateSourceReport,
-  generateVerifyReport: generateVerifyReport,
-  generateTimelineReport: generateTimelineReport
+  generateGenderReport    : generateGenderReport,
+  generateSourceReport    : generateSourceReport,
+  generateVerifyReport    : generateVerifyReport,
+  generateTimelineReport  : generateTimelineReport,
+  generateGeoReport       : generateGeoReport
 };
 
 /**
@@ -230,6 +231,62 @@ function generateTimelineReport(statusID, type, sessionUser) {
       return report;
     });
   })
+}
+
+/**
+ * Format data within database and create geo report on the database
+ * @param statusID
+ * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
+ * @param sessionUser
+ */
+function generateGeoReport(statusID, type, sessionUser) {
+  sails.log.info('ReportService.generateGeoReport');
+  return getUserOfType(statusID, type).then(function (users) {
+    if (!users || users.length <= 0){
+      throw new Error('can not find user by given status comments');
+    }
+
+    // grouping user by verified
+    var userGroup = _.groupBy(users, 'provinceDir');
+    var userGroupKeys = _.keys(userGroup);
+
+    // create seriesData
+    var seriesData = _.map(userGroupKeys, function (key) {
+      return {
+        name: key,
+        value: userGroup[key] && userGroup[key].length || 0
+      };
+    });
+
+    // calculate the max data range
+    var maxValue = _.last(_.sortBy(_.pluck(seriesData, 'value')));
+    var maxDataRange = Math.ceil(maxValue / 5) * 5;
+
+    // init report template
+    var mapTpl    = reportTemplates.map;
+    mapTpl.title.text  = '评论用户地区分析报告';
+    mapTpl.legend.data = ['评论'];
+    mapTpl.dataRange.max = maxDataRange || 50;
+    mapTpl.series[0].name = '评论';
+    mapTpl.series[0].data = seriesData;
+
+    // generate the new report
+    var newReport = {
+      type        : 1,
+      data        : JSON.stringify(mapTpl),
+      status      : statusID,
+      reportType  : reportTypes.user_geo.id,
+      creater     : sessionUser
+    };
+    return Report.create(newReport).then(function (report) {
+      if (!report){
+        throw new Error('can not create the new report');
+      }
+      sails.log.info('A new report has been created:');
+      sails.log.info(report);
+      return report;
+    });
+  });
 }
 
 /**

@@ -12,6 +12,7 @@ var User = {
     province            : { type: 'integer' },   // 用户所在省级ID
     city                : { type: 'integer' },   // 用户所在城市ID
     location            : { type: 'string' },   // 用户所在地
+    provinceDir         : { type: 'string' },   // 用户所在省级的字符串
     description         : { type: 'string' },   // 用户个人描述
     url                 : { type: 'string' },   // 用户博客地址
     profile_image_url   : { type: 'string' },   // 用户头像地址（中图），50×50像素
@@ -32,6 +33,16 @@ var User = {
 
     email               : { type: 'email',  unique: true },
     passports           : { collection: 'Passport', via: 'user' }
+  },
+  
+  beforeCreate: function (values, next) {
+    values.provinceDir = values.location.split(' ')[0];
+    return next();
+  },
+
+  beforeUpdate: function (values, next) {
+    values.provinceDir = values.location.split(' ')[0];
+    return next();
   }
 };
 

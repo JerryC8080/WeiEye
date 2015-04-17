@@ -51,5 +51,15 @@ describe('ReportService', function () {
       });
     });
   });
+
+  describe.only('#generateGeoReport', function () {
+    it('it should be return timeline report of given status', function (done) {
+      ReportService.generateGeoReport(STATUS, 1, 2254858394).then(function (report) {
+        done();
+      }).catch(function (err) {
+        done(err);
+      });
+    });
+  });
 });
 
