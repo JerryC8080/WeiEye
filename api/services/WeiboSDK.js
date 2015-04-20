@@ -14,7 +14,8 @@ var API_URL = {
   statuses_queryid      : 'https://api.weibo.com/2/statuses/queryid.json',
   statuses_show         : 'https://api.weibo.com/2/statuses/show.json',
   comments_show         : 'https://api.weibo.com/2/comments/show.json',
-  comments_show_batch   : 'https://api.weibo.com/2/comments/show_batch.json'
+  comments_show_batch   : 'https://api.weibo.com/2/comments/show_batch.json',
+  reporst_timeline      : 'https://api.weibo.com/2/statuses/repost_timeline.json'
 };
 
 /**
@@ -27,7 +28,8 @@ module.exports = {
   queryID               : queryID,
   showStatus            : showStatus,
   showCommentsOfStatus  : showCommentsOfStatus,
-  showCommentsBatch     : showCommentsBatch
+  showCommentsBatch     : showCommentsBatch,
+  showRepost            : showRepost
 };
 
 /**
@@ -92,6 +94,22 @@ function showCommentsBatch(user, commentIDs) {
       cids          : commentIDs
     })
   })
+}
+
+/**
+ * Show reports of fiven status id
+ * @param user
+ * @param statusID
+ * @param options
+ */
+function showRepost(user, statusID, options) {
+  options = options || {};
+  return getAccessToken(user).then(function (access_token) {
+    return requestGet(API_URL.reporst_timeline, _.defaults({
+      access_token: access_token,
+      id          : statusID
+    }, options));
+  });
 }
 
 /**
