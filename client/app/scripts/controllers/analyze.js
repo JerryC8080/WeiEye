@@ -8,27 +8,23 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeCtrl', function ($scope) {
+  .controller('AnalyzeCtrl', ['$log', '$scope',  function ($log, $scope) {
+    var perStepPercent = 0;
 
     $scope.processBar = {
-      percent: '0',
-      text: '0% complete'
+      percent: 0
     };
-
-    $scope.analyzeLogs = [];
 
     $scope.formData = {};
 
-    // register socket on event
-    io.socket.on('analyze_msg', function (response) {
-      if (response && response.status === 200){
-        $scope.analyzeLogs.push(response.msg);
-        console.log(response.msg);
-      }
-    });
+    $scope.analyzeLogs = [];
 
     // do analyze
     $scope.doAnalyze = function () {
+
+      // initialize
+      $scope.analyzeLogs = [];
+      $scope.processBar.percent = 0;
 
       // get from data
       $scope.formData = {
@@ -41,10 +37,35 @@ angular.module('weiEyeApp')
         type        : '评论'
       };
 
+      // caculate perStepPercent
+      var totalReportAnalyze = 0;
+      angular.forEach($scope.formData, function (value, key) {
+        if (value === true){
+          totalReportAnalyze++;
+        }
+      });
+      perStepPercent = Math.floor(100 / (6 + totalReportAnalyze * 2));
+
       // get socket request
       io.socket.get('/analyze-test', $scope.formData, function (resData) {
-        console.log(resData);
-        console.log(resData.report);
+
       });
-    }
-  });
+    };
+
+    // register socket on event
+    io.socket.on('analyze_msg', function (response) {
+      if (response && response.status === 200){
+        $scope.analyzeLogs.push(response.msg);
+        $scope.processBar.percent += perStepPercent;
+        $scope.$apply();
+        $log.info(response.msg);
+      }
+    });
+    io.socket.on('analyze_completed', function (response) {
+      if (response && response.status === 200){
+        $scope.analyzeLogs.push(response.msg);
+        $scope.processBar.percent = 100;
+        $scope.$apply();
+      }
+    });
+  }]);

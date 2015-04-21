@@ -142,7 +142,7 @@ function requestGet(url, data) {
         if (err){
           reject(err);
         }
-        resolve(res.body);
+        resolve(res.body || null);
       });
   });
 }

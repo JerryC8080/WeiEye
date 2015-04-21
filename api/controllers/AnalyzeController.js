@@ -56,28 +56,28 @@ function analyze(req, res) {
   // Translate MID to ID
   var MID = statusUrl.split('?')[0].split('/')[4];
 
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析链接...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析链接...'}, socketID);
   WeiboSDK.queryID(user, MID, type, 1).then(function (resBody) {
     statusID = resBody.id;
     if (!statusID){
       throw new Error('分析链接失败');
     }
     sails.log.info('分析链接完毕, statusID : ', statusID);
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析链接完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析链接完毕'}, socketID);
 
     // Get status info from weibo API
-    emitAnalyzeMsg(socketID, {status: 200, msg: '下载微博数据...'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '下载微博数据...'}, socketID);
     return DataService.downloadStatusInfo(user, statusID)
   }).then(function (status) {
     if (!status){
       throw new Error('下载微博数据失败');
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '下载微博数据完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '下载微博数据完毕'}, socketID);
     sails.log.info('下载微博数据完毕 : \n', status);
 
     // If type equal 1 , it means comment
     if (type === 1){
-      emitAnalyzeMsg(socketID, {status: 200, msg: '下载评论数据...'});
+      emitSocketEvent("analyze_msg", {status: 200, msg: '下载评论数据...'}, socketID);
       return DataService.downloadCommentsOfStatus(user, statusID);
     }
 
@@ -88,11 +88,11 @@ function analyze(req, res) {
       throw new Error('下载评论数据失败');
     }
     if (type === 1){
-      emitAnalyzeMsg(socketID, {status: 200, msg: '下载评论数据完毕'});
+      emitSocketEvent("analyze_msg", {status: 200, msg: '下载评论数据完毕'}, socketID);
       sails.log.info('下载评论数据完毕 : \n', objs);
     }
     if (type === 2){
-      emitAnalyzeMsg(socketID, {status: 200, msg: '下载转发数据完毕'});
+      emitSocketEvent("analyze_msg", {status: 200, msg: '下载转发数据完毕'}, socketID);
       sails.log.info('下载转发数据完毕 : \n', objs);
     }
 
@@ -110,7 +110,7 @@ function analyze(req, res) {
     if (!reports){
       throw new Error('分析报告失败');
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析报告完毕'});
+    emitSocketEvent("analyze_completed", {status: 200, msg: '分析报告完毕'}, socketID);
     sails.log.info('分析报告完毕 : \n', reports);
 
     // compact reports data
@@ -135,12 +135,13 @@ function analyze(req, res) {
 
 /**
  * Emit analyze_msg event for given client by socket id
+ * @param eventName
  * @param socketID
  * @param response
  */
-function emitAnalyzeMsg(socketID, response) {
+function emitSocketEvent(eventName, response, socketID) {
   if (socketID){
-    sails.sockets.emit(socketID, 'analyze_msg', response);
+    sails.sockets.emit(socketID, eventName, response);
   }
 }
 
@@ -153,13 +154,13 @@ function emitAnalyzeMsg(socketID, response) {
  * @returns {*}
  */
 function analyzeGenderReport(statusID, type, user, socketID) {
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户性别报告...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户性别报告...'}, socketID);
   return ReportService.generateGenderReport(statusID, type, user).then(function (report) {
     if (!report){
-      emitAnalyzeMsg(socketID, {status: 500, msg: '分析并生成评论用户性别失败'});
+      emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户性别失败'}, socketID);
       return null
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户性别完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户性别完毕'}, socketID);
     return report;
   });
 }
@@ -173,13 +174,13 @@ function analyzeGenderReport(statusID, type, user, socketID) {
  * @returns {*}
  */
 function analyzeSourceport(statusID, type, user, socketID) {
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户来源报告...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户来源报告...'}, socketID);
   return ReportService.generateSourceReport(statusID, type, user).then(function (report) {
     if (!report){
-      emitAnalyzeMsg(socketID, {status: 500, msg: '分析并生成评论用户来源报告失败'});
+      emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户来源报告失败'}, socketID);
       return null
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户来源报告完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户来源报告完毕'}, socketID);
     return report || null;
   });
 }
@@ -193,13 +194,13 @@ function analyzeSourceport(statusID, type, user, socketID) {
  * @returns {*}
  */
 function analyzeVerifyReport(statusID, type, user, socketID) {
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户认证报告...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户认证报告...'}, socketID);
   return ReportService.generateVerifyReport(statusID, type, user).then(function (report) {
     if (!report){
-      emitAnalyzeMsg(socketID, {status: 500, msg: '分析并生成评论用户认证报告失败'});
+      emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户认证报告失败'}, socketID);
       return null
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户认证报告完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户认证报告完毕'}, socketID);
     return report || null;
   });
 }
@@ -213,13 +214,13 @@ function analyzeVerifyReport(statusID, type, user, socketID) {
  * @returns {*}
  */
 function analyzeTimelineReport(statusID, type, user, socketID) {
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论时间曲线报告...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论时间曲线报告...'}, socketID);
   return ReportService.generateTimelineReport(statusID, type, user).then(function (report) {
     if (!report){
-      emitAnalyzeMsg(socketID, {status: 500, msg: '分析并生成评论时间曲线报告失败'});
+      emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论时间曲线报告失败'}, socketID);
       return null
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论时间曲线报告完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论时间曲线报告完毕'}, socketID);
     return report || null;
   });
 }
@@ -233,13 +234,13 @@ function analyzeTimelineReport(statusID, type, user, socketID) {
  * @returns {*}
  */
 function analyzeGeoReport(statusID, type, user, socketID) {
-  emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户地区分布报告...'});
+  emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户地区分布报告...'}, socketID);
   return ReportService.generateGeoReport(statusID, type, user).then(function (report) {
     if (!report){
-      emitAnalyzeMsg(socketID, {status: 500, msg: '分析并生成评论用户地区分布报告失败'});
+      emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户地区分布报告失败'}, socketID);
       return null
     }
-    emitAnalyzeMsg(socketID, {status: 200, msg: '分析并生成评论用户地区分布报告完毕'});
+    emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户地区分布报告完毕'}, socketID);
     return report || null;
   });
 }
