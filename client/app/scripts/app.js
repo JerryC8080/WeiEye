@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name angularDemo2App
+ * @name weiEyeApp
  * @description
- * # angularDemo2App
+ * # weiEyeApp
  *
  * Main module of the application.
  */
 angular
-  .module('angularDemo2App', [
+  .module('weiEyeApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -26,6 +26,10 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/analyze', {
+        templateUrl: 'views/analyze.html',
+        controller: 'AnalyzeCtrl'
       })
       .otherwise({
         redirectTo: '/'
