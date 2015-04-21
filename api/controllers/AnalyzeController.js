@@ -55,6 +55,7 @@ function analyze(req, res) {
 
   // Translate MID to ID
   var MID = statusUrl.split('?')[0].split('/')[4];
+
   emitAnalyzeMsg(socketID, {status: 200, msg: '分析链接...'});
   WeiboSDK.queryID(user, MID, type, 1).then(function (resBody) {
     statusID = resBody.id;
@@ -97,7 +98,7 @@ function analyze(req, res) {
 
     // init generate report method
     var doReportMethods = _.map(reportTypesKeys, function (key) {
-      if (req.body[key] === 'on'){
+      if (req.body[key]){
         return reportMethods[key](statusID, type, user, socketID);
       }
       return null;

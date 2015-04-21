@@ -40,6 +40,7 @@ module.exports = {
  * @param isBase62
  */
 function queryID(user, MID, type, isBase62) {
+
   // get access_token
   return getAccessToken(user).then(function (access_token) {
     if (!access_token){

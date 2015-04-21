@@ -38,11 +38,11 @@ angular.module('weiEyeApp')
         timeline    : $scope.timeline,
         user_geo    : $scope.user_geo,
         user_verify : $scope.user_verify,
-        type        : 1
+        type        : '评论'
       };
 
       // get socket request
-      socket.get('/analyze-test', $scope.formData, function (resData) {
+      io.socket.get('/analyze-test', $scope.formData, function (resData) {
         console.log(resData);
         console.log(resData.report);
       });
