@@ -110,8 +110,7 @@ function analyze(req, res) {
     if (!reports){
       throw new Error('分析报告失败');
     }
-    emitSocketEvent("analyze_completed", {status: 200, msg: '分析报告完毕'}, socketID);
-    sails.log.info('分析报告完毕 : \n', reports);
+
 
     // compact reports data
     var responseData = {};
@@ -123,7 +122,9 @@ function analyze(req, res) {
     });
 
     // Return report
-    res.ok(responseData);
+    emitSocketEvent("analyze_completed", {status: 200, msg: '分析报告完毕', data: responseData}, socketID);
+    sails.log.info('分析报告完毕 : \n', reports);
+//    res.ok(responseData);
   }).catch(function (err) {
     sails.log.error(err);
     res.json({

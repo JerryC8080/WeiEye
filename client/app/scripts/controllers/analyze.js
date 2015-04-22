@@ -8,7 +8,7 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeCtrl', ['$log', '$scope',  function ($log, $scope) {
+  .controller('AnalyzeCtrl', function ($rootScope, $log, $scope, $location) {
     var perStepPercent = 0;
 
     $scope.processBar = {
@@ -47,9 +47,7 @@ angular.module('weiEyeApp')
       perStepPercent = Math.floor(100 / (6 + totalReportAnalyze * 2));
 
       // get socket request
-      io.socket.get('/analyze-test', $scope.formData, function (resData) {
-
-      });
+      io.socket.get('/analyze-test', $scope.formData);
     };
 
     // register socket on event
@@ -63,9 +61,17 @@ angular.module('weiEyeApp')
     });
     io.socket.on('analyze_completed', function (response) {
       if (response && response.status === 200){
-        $scope.analyzeLogs.push(response.msg);
+        $scope.analyzeLogs.push('分析完毕');
         $scope.processBar.percent = 100;
         $scope.$apply();
+
+        if (response.data){
+          $rootScope.reports = response.data;
+          $location.path('/report');
+        }
+        setTimeout(function () {
+          $scope.$apply();
+        }, 1000)
       }
     });
-  }]);
+  });
