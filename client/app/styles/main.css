@@ -77,3 +77,22 @@ body {
     border-bottom: 0;
   }
 }
+
+@media (min-width: 980px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1324px) {
+  .container {
+    max-width: 1324px;
+  }
+}
+
+
+
+/* Report */
+.report {
+  /*height: 400px;*/
+  margin-bottom: 100px;
+}

@@ -8,12 +8,15 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('ReportCtrl', function ($rootScope, $log, $scope) {
+  .controller('ReportCtrl', function ($rootScope, $log, $scope, Report) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
 
-    $scope.reports = $rootScope.report
+    var reports = Report.getReport();
+    $log.info('ReportCtrl:');
+    $log.info('reports is :', reports);
+
   });

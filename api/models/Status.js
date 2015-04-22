@@ -15,7 +15,7 @@ module.exports = {
     id                : {type: 'string', unique: true, primaryKey: true},
     mid               : {type: 'string', unique: true},   // 微博的MID
     idstr             : {type: 'string', unique: true},   // 字符串型的微博ID
-    text              : {type: 'string'},   // 微博信息内容
+    text              : {type: 'text'},   // 微博信息内容
     source            : {type: 'string'},   // 微博来源
     truncated         : {type: 'boolean'},  // 是否被截断，true：是，false：否
     favorited         : {type: 'boolean'},  // 是否已收藏，true：是，false：否

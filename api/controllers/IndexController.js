@@ -8,7 +8,9 @@
 
 var fs = require('fs');
 var path = require('path');
-var emberApp = path.resolve(__dirname,'../../.tmp/public/client/index.html');
+var clientApp = path.resolve(__dirname,'../../.tmp/public/client/index.html');
+var adminApp = path.resolve(__dirname,'../../.tmp/public/admin/index.html');
+
 
 module.exports = {
 	index: function (req, res) {
@@ -17,11 +19,19 @@ module.exports = {
     });
   },
   client: function (req, res) {
-    fs.exists(emberApp + '', function(exists) {
+    fs.exists(clientApp + '', function(exists) {
       if (!exists) {
         return res.notFound('The requested file does not exist.');
       }
-      fs.createReadStream(emberApp).pipe(res);
+      fs.createReadStream(clientApp).pipe(res);
+    });
+  },
+  admin: function (req, res) {
+    fs.exists(adminApp + '', function(exists) {
+      if (!exists) {
+        return res.notFound('The requested file does not exist.');
+      }
+      fs.createReadStream(adminApp).pipe(res);
     });
   }
 };

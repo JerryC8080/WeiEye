@@ -20,6 +20,14 @@ module.exports.echart = {
         trigger: 'item',
         formatter: "{a} <br/>{b} : {c} ({d}%)"
       },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: {show: true, readOnly: false},
+          restore: {show: true},
+          saveAsImage: {show: true}
+        }
+      },
       legend: {
         orient : 'vertical',
         x : 'left',
@@ -51,6 +59,14 @@ module.exports.echart = {
       tooltip : {
         trigger: 'item',
         formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: {show: true, readOnly: false},
+          restore: {show: true},
+          saveAsImage: {show: true}
+        }
       },
       legend: {
         orient : 'vertical',
@@ -172,6 +188,14 @@ module.exports.echart = {
         }
         */
       },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: {show: true, readOnly: false},
+          restore: {show: true},
+          saveAsImage: {show: true}
+        }
+      },
       dataZoom : {
         show : true,
         realtime : true,
@@ -215,6 +239,14 @@ module.exports.echart = {
       },
       tooltip : {
         trigger: 'item'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: {show: true, readOnly: false},
+          restore: {show: true},
+          saveAsImage: {show: true}
+        }
       },
       legend: {
         orient: 'vertical',

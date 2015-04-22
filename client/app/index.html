@@ -23,7 +23,7 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
+        <ul ng-nav class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#/">Home</a></li>
           <li><a ng-href="#/analyze">Analyze</a></li>
           <li><a ng-href="#/about">About</a></li>
@@ -73,14 +73,24 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/lib/echarts-all.js"></script>
+        <script src="scripts/lib/sails.io.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/analyze.js"></script>
         <script src="scripts/controllers/report.js"></script>
-        <!-- endbuild -->
-    <script src="scripts/dependencies/sails.io.js"></script>
-    <script>io.sails.url = "http://127.0.0.1:1337";</script>`
+        <script src="scripts/directives/ng-gender-report.js"></script>
+        <script src="scripts/directives/ng-source-report.js"></script>
+        <script src="scripts/directives/ng-timeline-report.js"></script>
+        <script src="scripts/directives/ng-geo-report.js"></script>
+        <script src="scripts/directives/ng-verify-report.js"></script>
+        <script src="scripts/services/report.js"></script>
+        <script src="scripts/directives/ng-nav.js"></script>
+        <script>io.sails.url = "http://www.weieye.com:1337";</script>
+    <!-- endbuild -->
+
+
 
   </body>
 </html>

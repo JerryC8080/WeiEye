@@ -14,6 +14,8 @@
  * http://passportjs.org/guide/providers/
  */
 
+var domain = 'http://www.weieye.com:1337';
+
 module.exports.passport = {
   local: {
     strategy: require('passport-local').Strategy
@@ -26,7 +28,7 @@ module.exports.passport = {
     options: {
       clientID: '4014020605',
       clientSecret: 'baa21a20ba578c3636e49577a3156133',
-      callbackURL: 'http://127.0.0.1:1337/auth/sina/callback'
+      callbackURL: domain + '/auth/sina/callback'
     }
   }
 };

@@ -38,7 +38,7 @@ client/bower_components
 client/node_modules
 assets/images/upload
 www
-#assets/admin
+assets/admin
 assets/client
 
 node_modules

@@ -39,6 +39,12 @@ module.exports.routes = {
     skipAssets: true,
     skipRegex: /^\/api\/.*$/
   },
+  '/admin/*': {
+    controller: 'IndexController',
+    action: 'admin',
+    skipAssets: true,
+    skipRegex: /^\/api\/.*$/
+  },
 
   /***************************************************************************
    *                                                                          *
@@ -71,6 +77,8 @@ module.exports.routes = {
    * Test Routes
    */
   'get /analyze-test': 'AnalyzeController.analyze',
-  'get /analyze-test-page': {view: 'examples/analyze-test'}
+  'get /analyze-test-page': {view: 'examples/analyze-test'},
+  'get /echarts-test': {view: 'examples/echarts-test'}
+
 
 };

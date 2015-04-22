@@ -8,7 +8,7 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeCtrl', function ($rootScope, $log, $scope, $location) {
+  .controller('AnalyzeCtrl', function ($rootScope, $log, $scope, $location, Report) {
     var perStepPercent = 0;
 
     $scope.processBar = {
@@ -64,14 +64,17 @@ angular.module('weiEyeApp')
         $scope.analyzeLogs.push('分析完毕');
         $scope.processBar.percent = 100;
         $scope.$apply();
-
-        if (response.data){
-          $rootScope.reports = response.data;
-          $location.path('/report');
-        }
-        setTimeout(function () {
-          $scope.$apply();
-        }, 1000)
+        $scope.$emit('AnalyzeCompleted', response.data);
       }
     });
+
+    $scope.$on('AnalyzeCompleted', function (event, data) {
+      setTimeout(function () {
+        if (data){
+          Report.resetReport(data);
+          $location.path('/report');
+          $scope.$apply();
+        }
+      }, 1000)
+    })
   });
