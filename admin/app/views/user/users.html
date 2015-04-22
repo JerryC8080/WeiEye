@@ -1,0 +1,64 @@
+<!--
+  Copyright (c) 2014 Meizu bigertech, All rights reserved.
+  @author hong
+  @date  13/3/15
+  @description
+-->
+
+<section class="content-header clearfix">
+  <h3> 全部用户 </h3>
+</section>
+
+<section class="content table-responsive">
+
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="用户昵称">
+
+    </div>
+  </form>
+  <table class="table">
+    <thead>
+    <tr>
+      <th style="min-width:50px">操作</th>
+      <th style="min-width:45px"> 序号</th>
+      <th style="min-width:100px"> 是否授权</th>
+      <th style="min-width:75px"> 用户头像</th>
+      <td style="min-width:120px"> 用户名</td>
+      <td style="min-width:120px"> 用户所在地</td>
+      <td style="min-width:120px"> 粉丝数</td>
+      <td style="min-width:120px"> 关注数</td>
+      <td style="min-width:120px"> 微博数</td>
+      <td style="min-width:120px"> 收藏数</td>
+      <th style="min-width:75px"> 域名</th>
+      <th style="min-width:150px"> 网址</th>
+      <th style="min-width:60px"> 性别</th>
+      <th style="min-width:150px"> 注册时间</th>
+      <th style="min-width:100px"> 认证状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users">
+      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(user.id)">删除</button></td>
+      <td> {{$index+1}}</td>
+      <td ng-if="user.passports[0]">已授权</td>
+      <td ng-if="!user.passports[0]">未授权</td>
+      <td><img class="avatar" ng-src="{{user.profile_image_url}}"></td>
+      <td><a href="#/users/{{user.id}}">{{user.screen_name}}</a></td>
+      <td> {{user.location}}</td>
+      <td> {{user.followers_count}}</td>
+      <td> {{user.friends_count}}</td>
+      <td> {{user.statuses_count}}</td>
+      <td> {{user.favourites_count}}</td>
+      <td> {{user.domain}}</td>
+      <td> {{user.url}}</td>
+      <td>{{user.gender}}</td>
+      <td> {{user.createdAt | timeFilter}}</td>
+      <td ng-if="user.verified != true"> 未认证</td>
+      <td ng-if="user.verified == true"> 已认证</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="items_per_page"
+            boundary-links="true" rotate="false"  ng-change="pageChanged()" class="pull-right"></pagination>

@@ -1,0 +1,79 @@
+<!--
+  Copyright (c) 2014 Meizu bigertech, All rights reserved.
+  @author hong
+  @date  16/3/15
+  @description
+-->
+
+<section class="content-header clearfix">
+  <h3 class="pull-left"> 用户 </h3>
+
+</section>
+
+<section class="content">
+  <div class="col-md-6">
+    <form role="form">
+
+      <div class="form-group">
+        <label for="avatar">头像</label>
+        <img class="avatar" id="avatar" ng-src="{{user.profile_image_url}}">
+      </div>
+      <div class="form-group">
+        <label for="screen_name">用户昵称</label>
+        <input type="text" ng-model="user.screen_name" ng-change='update("screen_name")' id=screen_name class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="gender">性别</label>
+        <label ng-repeat="value in list.gender">
+          <input type="radio" name="genderRadio" ng-model="list.genderSelec" ng-value="value"
+                 ng-checked="list.genderSelec == value" ng-change='update("gender")' id="gender"/>{{value}}
+        </label>
+
+      </div>
+      <div class="form-group">
+        <label>状态</label>
+        <select class="form-control" ng-model="list.statusSelec"
+                ng-options="status.label for status in list.status" ng-change='update("status")'>
+        </select>
+
+      </div>
+      <div class="form-group">
+        <label for="website">网址</label>
+        <input type="text" ng-model="user.website" ng-change='update("website")' class="form-control" id="website">
+      </div>
+      <div class="form-group">
+        <label for="city">城市</label>
+        <input type="text" ng-model="user.city" ng-change='update("city")' class="form-control" id="city">
+      </div>
+      <div class="form-group">
+        <label for="tel">电话</label>
+        <input type="text" ng-model="user.tel" ng-change='update("tel")' class="form-control" id="tel">
+      </div>
+      <div class="form-group">
+        <label>电话状态</label>
+        <select class="form-control" ng-model="list.telSelec"
+               ng-options="tel.label for tel in list.tel" ng-change='update("tel_status")'>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        <input type="text" ng-model="user.email" ng-change='update("email")' class="form-control" id="email">
+      </div>
+      <div class="form-group">
+        <label for="email_status">邮箱状态</label>
+        <select class="form-control" ng-model="list.emailSelec"
+                ng-options="email.label for email in list.email" ng-change='update("email_status")' id="email_status">
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="domain">域名</label>
+        <input type="text" ng-model="user.domain" ng-change='update("domain")' class="form-control" id="domain">
+      </div>
+    </form>
+
+    <button class="btn btn-primary" ng-click="save()">保存</button>
+    <button class="btn btn-primary" ng-click="delete()">删除</button>
+
+  </div>
+</section>
