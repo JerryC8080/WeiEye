@@ -36,6 +36,10 @@ angular
         templateUrl: 'views/report.html',
         controller: 'ReportCtrl'
       })
+      .when('/login', {
+        templateUrl: 'views/login-form.html',
+        controller: 'LoginFormCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
