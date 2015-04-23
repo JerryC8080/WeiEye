@@ -1,0 +1,24 @@
+/* Report */
+.report {
+  /*height: 400px;*/
+  margin-bottom: 100px;
+}
+.weibo {
+  text-align: left;
+}
+.weibo_title img {
+  height: 50px;
+  width: 50px;
+  margin-right:10px;
+}
+.weibo_content {
+  font-size:14px;
+  line-height: 23px;
+  padding: 4px 0 4px;
+}
+.list-group-item-avatar img {
+  height:30px;
+  width:30px;
+  border-radius:50% 50%;
+  margin-right:10px
+}

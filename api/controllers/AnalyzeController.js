@@ -32,15 +32,34 @@ function analyze(req, res) {
       statusID  = null,
       user      = req.session.passport && req.session.passport.user,
       statusUrl = req.body.statusUrl,
-      type      = req.body.type;
+      type      = '评论',
+      response  = {
+        reports : null,
+        comments: null,
+        status  : null
+      };
+
+
+  // Get socket id if it's socket request
+  if (isSocket){
+    socketID = sails.sockets.id(req.socket)
+  }
 
   // Check login
   if (!user ){
+    sails.log.error('需要登录');
+    if (isSocket){
+      return emitSocketEvent("analyze_msg", {status: 400, msg: '需要登录'}, socketID);
+    }
     return res.badRequest('需要登录');
   }
 
   // Check intergrity of params
   if (!statusUrl || !type){
+    sails.log.error('参数不全');
+    if (isSocket){
+      return emitSocketEvent("analyze_msg", {status: 400, msg: '参数不全'}, socketID);
+    }
     return res.badRequest('参数不全');
   }
 
@@ -48,10 +67,6 @@ function analyze(req, res) {
   type = typeText[type];
   sails.log.info('分析开始');
 
-  // Get socket id if it's socket request
-  if (isSocket){
-    socketID = sails.sockets.id(req.socket)
-  }
 
   // Translate MID to ID
   var MID = statusUrl.split('?')[0].split('/')[4];
@@ -75,6 +90,11 @@ function analyze(req, res) {
     emitSocketEvent("analyze_msg", {status: 200, msg: '下载微博数据完毕'}, socketID);
     sails.log.info('下载微博数据完毕 : \n', status);
 
+    // find status populate user
+    return Status.findOne(status.id).populate('user');
+  }).then(function (status) {
+    response.status = status;
+
     // If type equal 1 , it means comment
     if (type === 1){
       emitSocketEvent("analyze_msg", {status: 200, msg: '下载评论数据...'}, socketID);
@@ -82,7 +102,6 @@ function analyze(req, res) {
     }
 
     // TODO if type equal 2, it means repost , download it
-
   }).then(function (objs) {
     if (!objs){
       throw new Error('下载评论数据失败');
@@ -95,6 +114,13 @@ function analyze(req, res) {
       emitSocketEvent("analyze_msg", {status: 200, msg: '下载转发数据完毕'}, socketID);
       sails.log.info('下载转发数据完毕 : \n', objs);
     }
+
+    // find comments populate user
+    var commentIds = _.pluck(objs, 'id');
+    return Comment.find(commentIds).populate('user');
+
+  }).then(function (comments) {
+    response.comments = comments;
 
     // init generate report method
     var doReportMethods = _.map(reportTypesKeys, function (key) {
@@ -112,16 +138,21 @@ function analyze(req, res) {
     }
 
     // compact reports data
-    var responseData = {};
+    var reportsData = {};
     _.map(reports, function (report, index) {
       if (!report){
         return ;
       }
-      responseData[reportTypesKeys[index]] = report;
+      reportsData[reportTypesKeys[index]] = report;
     });
+    response.reports = reportsData;
 
     // Return report
-    emitSocketEvent("analyze_completed", {status: 200, msg: '分析报告完毕', data: responseData}, socketID);
+    emitSocketEvent("analyze_completed", {
+      status: 200,
+      msg: '分析报告完毕',
+      data: response
+    }, socketID);
     sails.log.info('分析报告完毕 : \n', reports);
   }).catch(function (err) {
     sails.log.error(err);
