@@ -1,35 +1,80 @@
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-      <img class="img-responsive img-rounded" src="{{user.avatar_hd}}" alt=""/>
+
+  <div class="col-md-3">
+    <div class="row avatar">
+      <img class="col-md-12 img-responsive" src="{{user.avatar_hd}}" alt=""/>
     </div>
-    <div class="col-md-10">
-      <div class="paramter">
-        <div class="followers_count">
-          粉丝：<span>{{user.followers_count}}</span>
+    <div class="paramter">
+
+      <div class="row description">
+        <div class="col-md-12">{{user.description}}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="followers_count">
+            粉丝：<span>{{user.followers_count}}</span>
+          </div>
         </div>
-        <div class="friends_count">
-          关注：<span>{{user.friends_count}}</span>
-        </div>
-        <div class="statuses_count">
-          微博：<span>{{user.statuses_count}}</span>
-        </div>
-        <div class="favourites_count">
-          收藏：<span>{{user.favourites_count}}</span>
+        <div class="col-md-6">
+          <div class="friends_count">
+            关注：<span>{{user.friends_count}}</span>
+          </div>
         </div>
       </div>
-      <div class="description">
-        {{user.description}}
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="followers_count">
+            粉丝：<span>{{user.followers_count}}</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="friends_count">
+            关注：<span>{{user.friends_count}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="col-md-9">
+
+    <!-- 我的最新微博 -->
     <h3 class="title">我的最新微博</h3>
-  </div>
-  <div class="row">
+    <div ng-repeat="status in timelineStatus">
+      <div class="panel panel-default">
+        <div class="weibo panel-body">
+          <div class="weibo_content">
+            {{status.text}}
+          </div>
+          <div class="weibo_pic">
+            <img src="{{status.thumbnail_pic}}" alt=""/>
+          </div>
+          <div class=" text-right">
+            <button type="button" class="btn btn-info">分析微博</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 我的分析微博 -->
     <h3 class="title">我的分析微博</h3>
-    {{analyzeStatus}}
+    <div ng-repeat="status in analyzeStatus">
+      <div class="panel panel-default">
+        <div class="weibo panel-body">
+          <div class="weibo_content">
+            {{status.text}}
+          </div>
+          <div class="weibo_pic">
+            <img src="{{status.thumbnail_pic}}" alt=""/>
+          </div>
+          <div class=" text-right">
+            <button type="button" class="btn btn-danger">查看报告</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

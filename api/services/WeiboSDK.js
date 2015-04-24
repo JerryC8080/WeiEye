@@ -15,7 +15,8 @@ var API_URL = {
   statuses_show         : 'https://api.weibo.com/2/statuses/show.json',
   comments_show         : 'https://api.weibo.com/2/comments/show.json',
   comments_show_batch   : 'https://api.weibo.com/2/comments/show_batch.json',
-  reporst_timeline      : 'https://api.weibo.com/2/statuses/repost_timeline.json'
+  reporst_timeline      : 'https://api.weibo.com/2/statuses/repost_timeline.json',
+  user_timeline         : 'https://api.weibo.com/2/statuses/user_timeline.json'
 };
 
 /**
@@ -29,7 +30,8 @@ module.exports = {
   showStatus            : showStatus,
   showCommentsOfStatus  : showCommentsOfStatus,
   showCommentsBatch     : showCommentsBatch,
-  showRepost            : showRepost
+  showRepost            : showRepost,
+  showUserTimeline      : showUserTimeline
 };
 
 /**
@@ -110,6 +112,18 @@ function showRepost(user, statusID, options) {
       access_token: access_token,
       id          : statusID
     }, options));
+  });
+}
+
+/**
+ * Show status of user timeline
+ * @param user
+ */
+function showUserTimeline(user) {
+  return getAccessToken(user).then(function (access_token) {
+    return requestGet(API_URL.user_timeline, {
+      access_token: access_token
+    });
   });
 }
 

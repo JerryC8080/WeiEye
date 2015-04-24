@@ -21,7 +21,7 @@ angular
   .run(function (CONFIG, User, $http, $log) {
     $http
       // TODO should change the url to '/user/getCurrentUser'
-      .get(CONFIG.apiUrl + '/user/getJC')
+      .get(CONFIG.apiUrl + '/user/getCurrentUser')
       .then(function (res) {
         var user = res.data;
         if (user && user !== 'null'){

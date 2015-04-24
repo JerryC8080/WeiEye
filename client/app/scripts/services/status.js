@@ -29,6 +29,18 @@ angular.module('weiEyeApp')
           }).catch(function (error) {
             $log.error(error);
           });
+      },
+      getTimeline: function (access_token) {
+        return $http
+          .get(CONFIG.apiUrl + '/status/getMyTimeline')
+          .then(function (res) {
+            $log.info(res);
+            if (res.status === 200){
+              return res.data;
+            }
+          }).catch(function (error) {
+            $log.error(error);
+          });
       }
     };
   });
