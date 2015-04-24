@@ -122,10 +122,12 @@ function analyze(req, res) {
   }).then(function (comments) {
     response.comments = comments;
 
+    var batch = Date.now();
+
     // init generate report method
     var doReportMethods = _.map(reportTypesKeys, function (key) {
       if (req.body[key]){
-        return reportMethods[key](statusID, type, user, socketID);
+        return reportMethods[key](statusID, type, user, socketID, batch);
       }
       return null;
     });
@@ -181,11 +183,12 @@ function emitSocketEvent(eventName, response, socketID) {
  * @param type
  * @param user
  * @param socketID
+ * @param batchTime
  * @returns {*}
  */
-function analyzeGenderReport(statusID, type, user, socketID) {
+function analyzeGenderReport(statusID, type, user, socketID, batchTime) {
   emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户性别报告...'}, socketID);
-  return ReportService.generateGenderReport(statusID, type, user).then(function (report) {
+  return ReportService.generateGenderReport(statusID, type, user, batchTime).then(function (report) {
     if (!report){
       emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户性别失败'}, socketID);
       return null
@@ -201,11 +204,12 @@ function analyzeGenderReport(statusID, type, user, socketID) {
  * @param type
  * @param user
  * @param socketID
+ * @param batchTime
  * @returns {*}
  */
-function analyzeSourceport(statusID, type, user, socketID) {
+function analyzeSourceport(statusID, type, user, socketID, batchTime) {
   emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户来源报告...'}, socketID);
-  return ReportService.generateSourceReport(statusID, type, user).then(function (report) {
+  return ReportService.generateSourceReport(statusID, type, user, batchTime).then(function (report) {
     if (!report){
       emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户来源报告失败'}, socketID);
       return null
@@ -221,11 +225,12 @@ function analyzeSourceport(statusID, type, user, socketID) {
  * @param type
  * @param user
  * @param socketID
+ * @param batchTime
  * @returns {*}
  */
-function analyzeVerifyReport(statusID, type, user, socketID) {
+function analyzeVerifyReport(statusID, type, user, socketID, batchTime) {
   emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户认证报告...'}, socketID);
-  return ReportService.generateVerifyReport(statusID, type, user).then(function (report) {
+  return ReportService.generateVerifyReport(statusID, type, user, batchTime).then(function (report) {
     if (!report){
       emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户认证报告失败'}, socketID);
       return null
@@ -241,11 +246,12 @@ function analyzeVerifyReport(statusID, type, user, socketID) {
  * @param type
  * @param user
  * @param socketID
+ * @param batchTime
  * @returns {*}
  */
-function analyzeTimelineReport(statusID, type, user, socketID) {
+function analyzeTimelineReport(statusID, type, user, socketID, batchTime) {
   emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论时间曲线报告...'}, socketID);
-  return ReportService.generateTimelineReport(statusID, type, user).then(function (report) {
+  return ReportService.generateTimelineReport(statusID, type, user, batchTime).then(function (report) {
     if (!report){
       emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论时间曲线报告失败'}, socketID);
       return null
@@ -261,11 +267,12 @@ function analyzeTimelineReport(statusID, type, user, socketID) {
  * @param type
  * @param user
  * @param socketID
+ * @param batchTime
  * @returns {*}
  */
-function analyzeGeoReport(statusID, type, user, socketID) {
+function analyzeGeoReport(statusID, type, user, socketID, batchTime) {
   emitSocketEvent("analyze_msg", {status: 200, msg: '分析并生成评论用户地区分布报告...'}, socketID);
-  return ReportService.generateGeoReport(statusID, type, user).then(function (report) {
+  return ReportService.generateGeoReport(statusID, type, user, batchTime).then(function (report) {
     if (!report){
       emitSocketEvent("analyze_msg", {status: 500, msg: '分析并生成评论用户地区分布报告失败'}, socketID);
       return null

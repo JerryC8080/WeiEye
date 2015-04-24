@@ -14,6 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/report.css">
+    <link rel="stylesheet" href="styles/user-center.css">
     <!-- endbuild -->
   </head>
   <body ng-app="weiEyeApp" ng-controller="ApplicationCtrl">
@@ -22,7 +23,7 @@
     <![endif]-->
 
     <!-- Login Dialog -->
-    <div login-dialog ng-if="!isLoginPage"></div>
+    <div login-dialog ng-if="!user"></div>
 
     <!-- Add your site or application content here -->
     <div class="container">
@@ -31,7 +32,7 @@
           <li class="active"><a ng-href="#/">Home</a></li>
           <li><a ng-href="#/analyze">Analyze</a></li>
           <li><a ng-href="#/about">About</a></li>
-          <li ng-if="currentUser"><a ng-href="#/user-center">个人中心</a></li>
+          <li ng-show="user.id" ><a ng-href="#/user-center">个人中心</a></li>
         </ul>
         <h3 class="text-muted">WeiEye</h3>
       </div>
@@ -39,7 +40,7 @@
       <div ng-view=""></div>
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> Power by JerryC</p>
+        <p><span class="glyphicon glyphicon-heart"></span> Marked by JerryC</p>
       </div>
     </div>
 
@@ -96,13 +97,11 @@
     <script src="scripts/services/comment.js"></script>
     <script src="scripts/services/status.js"></script>
     <script src="scripts/controllers/login-form.js"></script>
-    <script src="scripts/services/auth_events.js"></script>
-    <script src="scripts/services/user_roles.js"></script>
-    <script src="scripts/services/authservice.js"></script>
-    <script src="scripts/services/session.js"></script>
     <script src="scripts/controllers/application.js"></script>
-    <script src="scripts/services/authinterceptor.js"></script>
     <script src="scripts/directives/login-dialog.js"></script>
+    <script src="scripts/services/user.js"></script>
+    <script src="scripts/services/config.js"></script>
+    <script src="scripts/controllers/user-center.js"></script>
     <!-- endbuild -->
 
 

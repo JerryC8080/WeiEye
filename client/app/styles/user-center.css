@@ -1,0 +1,18 @@
+.title{
+  line-height: 40px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.paramter {
+  margin-bottom: 10px;
+}
+.paramter div{
+  margin-bottom: 2px;
+}
+
+.paramter span{
+  font-size: 19px;
+  font-weight: bold;
+  color: red;
+}

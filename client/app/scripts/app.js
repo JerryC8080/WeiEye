@@ -18,6 +18,17 @@ angular
     'ngTouch',
     'ui.bootstrap'
   ])
+  .run(function (CONFIG, User, $http, $log) {
+    $http
+      // TODO should change the url to '/user/getCurrentUser'
+      .get(CONFIG.apiUrl + '/user/getJC')
+      .then(function (res) {
+        var user = res.data;
+        if (user && user !== 'null'){
+          User.setUser(user);
+        }
+      });
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -39,6 +50,10 @@ angular
       .when('/login', {
         templateUrl: 'views/login-form.html',
         controller: 'LoginFormCtrl'
+      })
+      .when('/user-center', {
+        templateUrl: 'views/user-center.html',
+        controller: 'UserCenterCtrl'
       })
       .otherwise({
         redirectTo: '/'

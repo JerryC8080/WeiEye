@@ -8,7 +8,8 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeCtrl', function ($rootScope, $log, $scope, $location, Report, Comment, Status) {
+  .controller('AnalyzeCtrl', function (User, $rootScope, $log, $scope, $location, Report, Comment, Status) {
+
     var perStepPercent = 0;
 
     $scope.processBar = {

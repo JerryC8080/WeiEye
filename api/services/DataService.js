@@ -95,16 +95,18 @@ function downloadCommentsOfStatus(user, statusID) {
     });
 
     // update or create user of comments
-    return Promise.map(users, function (user) {
-      var _user = user;
+    return Promise.map(users, function (rowUser) {
+      var _user = rowUser;
       return User.findOne(_user.id).then(function (user) {
 
         // if user is not exist , create it
         if (!user){
+          sails.log.info('will create user :', _user);
           return User.create(_user);
         }
 
         // if user is exist , update it
+        sails.log.info('will update user :', _user);
         return User.update({id: _user.id}, _user).then(function (users) {
           return users[0];
         });

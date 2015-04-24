@@ -25,8 +25,9 @@ module.exports = {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  * @param sessionUser
+ * @param batchTime
  */
-function generateGenderReport(statusID, type, sessionUser) {
+function generateGenderReport(statusID, type, sessionUser, batchTime) {
   sails.log.info('ReportService.generateGenderReport:');
   return getUserOfType(statusID, type).then(function (users) {
     if (!users || users.length <= 0){
@@ -51,7 +52,8 @@ function generateGenderReport(statusID, type, sessionUser) {
       data        : JSON.stringify(pieTpl),
       status      : statusID,
       reportType  : reportTypes.user_gender.id,
-      creater     : sessionUser
+      creater     : sessionUser,
+      batch       : batchTime
     };
     return Report.create(newReport).then(function (report) {
       if (!report){
@@ -69,8 +71,9 @@ function generateGenderReport(statusID, type, sessionUser) {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  * @param sessionUser
+ * @param batchTime
  */
-function generateSourceReport(statusID, type, sessionUser) {
+function generateSourceReport(statusID, type, sessionUser, batchTime) {
   sails.log.info('ReportService.generateSourceReport:');
   return getCommentOrRetweetedStatus(statusID, type).then(function (objs) {
     if (!objs || objs.length <= 0){
@@ -100,7 +103,8 @@ function generateSourceReport(statusID, type, sessionUser) {
       data        : JSON.stringify(rainbowBarTpl),
       status      : statusID,
       reportType  : reportTypes.user_source.id,
-      creater     : sessionUser
+      creater     : sessionUser,
+      batch       : batchTime
     };
     return Report.create(newReport).then(function (report) {
       if (!report){
@@ -118,8 +122,9 @@ function generateSourceReport(statusID, type, sessionUser) {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  * @param sessionUser
+ * @param batchTime
  */
-function generateVerifyReport(statusID, type, sessionUser) {
+function generateVerifyReport(statusID, type, sessionUser, batchTime) {
   sails.log.info('ReportService.generateVerifyReport:');
   return getUserOfType(statusID, type).then(function (users) {
     if (!users || users.length <= 0){
@@ -144,7 +149,8 @@ function generateVerifyReport(statusID, type, sessionUser) {
       data        : JSON.stringify(ringPieTpl),
       status      : statusID,
       reportType  : reportTypes.user_verify.id,
-      creater     : sessionUser
+      creater     : sessionUser,
+      batch       : batchTime
     };
     return Report.create(newReport).then(function (report) {
       if (!report){
@@ -162,8 +168,9 @@ function generateVerifyReport(statusID, type, sessionUser) {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  * @param sessionUser
+ * @param batchTime
  */
-function generateTimelineReport(statusID, type, sessionUser) {
+function generateTimelineReport(statusID, type, sessionUser, batchTime) {
   return getCommentOrRetweetedStatus(statusID, type).then(function (objs) {
     if (!objs || objs.length <= 0){
       throw new Error('can not find user by given status comments');
@@ -220,7 +227,8 @@ function generateTimelineReport(statusID, type, sessionUser) {
       data        : JSON.stringify(rainbowBarTpl),
       status      : statusID,
       reportType  : reportTypes.timeline.id,
-      creater     : sessionUser
+      creater     : sessionUser,
+      batch       : batchTime
     };
     return Report.create(newReport).then(function (report) {
       if (!report){
@@ -238,8 +246,9 @@ function generateTimelineReport(statusID, type, sessionUser) {
  * @param statusID
  * @param type , the type of report, type can be 1(comment) or 2 (retweeted status)
  * @param sessionUser
+ * @param batchTime
  */
-function generateGeoReport(statusID, type, sessionUser) {
+function generateGeoReport(statusID, type, sessionUser, batchTime) {
   sails.log.info('ReportService.generateGeoReport');
   return getUserOfType(statusID, type).then(function (users) {
     if (!users || users.length <= 0){
@@ -276,7 +285,8 @@ function generateGeoReport(statusID, type, sessionUser) {
       data        : JSON.stringify(mapTpl),
       status      : statusID,
       reportType  : reportTypes.user_geo.id,
-      creater     : sessionUser
+      creater     : sessionUser,
+      batch       : batchTime
     };
     return Report.create(newReport).then(function (report) {
       if (!report){

@@ -7,7 +7,7 @@
  * # loginDialog
  */
 angular.module('weiEyeApp')
-  .directive('loginDialog', function (AUTH_EVENTS) {
+  .directive('loginDialog', function () {
     return {
       restrict: 'A',
       template: '<div ng-if="visible" ng-include="\'login-form.html\'">',
@@ -17,8 +17,6 @@ angular.module('weiEyeApp')
         };
 
         scope.visible = false;
-        scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
-        scope.$on(AUTH_EVENTS.sessionTimeout, showDialog)
       }
     };
   });

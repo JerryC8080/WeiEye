@@ -1,0 +1,35 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <img class="img-responsive img-rounded" src="{{user.avatar_hd}}" alt=""/>
+    </div>
+    <div class="col-md-10">
+      <div class="paramter">
+        <div class="followers_count">
+          粉丝：<span>{{user.followers_count}}</span>
+        </div>
+        <div class="friends_count">
+          关注：<span>{{user.friends_count}}</span>
+        </div>
+        <div class="statuses_count">
+          微博：<span>{{user.statuses_count}}</span>
+        </div>
+        <div class="favourites_count">
+          收藏：<span>{{user.favourites_count}}</span>
+        </div>
+      </div>
+      <div class="description">
+        {{user.description}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3 class="title">我的最新微博</h3>
+  </div>
+  <div class="row">
+    <h3 class="title">我的分析微博</h3>
+    {{analyzeStatus}}
+  </div>
+</div>
