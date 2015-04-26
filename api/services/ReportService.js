@@ -42,8 +42,8 @@ function generateGenderReport(statusID, type, sessionUser, batchTime) {
     pieTpl.title.text  = '评论用户性别分析报告';
     pieTpl.legend.data = ['男', '女'];
     pieTpl.series[0].data = [
-      {value: userGroup['m'].length || 0, name: '男'},
-      {value: userGroup['f'].length || 0, name: '女'}
+      {value: userGroup['m'] && userGroup['m'].length || 0, name: '男'},
+      {value: userGroup['f'] && userGroup['f'].length || 0, name: '女'}
     ];
 
     // generate the new report

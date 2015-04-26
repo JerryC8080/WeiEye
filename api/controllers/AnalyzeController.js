@@ -79,7 +79,7 @@ function analyze(req, res) {
       sails.log.info('分析链接完毕, statusID : ', statusID);
       SocketService.emitEvent("analyze_msg", {status: 200, msg: '分析链接完毕'}, socketID);
       resolve(statusID);
-    });
+    }).catch(reject);
   }).then(function (statusID) {
 
     // analyze target status and then return analyze result
@@ -95,10 +95,7 @@ function analyze(req, res) {
     sails.log.info('分析报告完毕');
   }).catch(function (err) {
     sails.log.error(err);
-    res.json({
-      status: 500,
-      msg: err.message || '未知错误'
-    });
+    SocketService.emitEvent("analyze_msg", {status: 500, msg: err.message || '未知错误'}, socketID);
   });
 }
 

@@ -55,6 +55,10 @@ angular
         templateUrl: 'views/user-center.html',
         controller: 'UserCenterCtrl'
       })
+      .when('/my-analyze', {
+        templateUrl: 'views/my-analyze.html',
+        controller: 'MyAnalyzeCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
