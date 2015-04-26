@@ -48,7 +48,7 @@ angular.module('weiEyeApp')
       perStepPercent = Math.floor(100 / (6 + totalReportAnalyze * 2));
 
       // get socket request
-      io.socket.get('/analyze-test', $scope.formData);
+      io.socket.post('/analyze', $scope.formData);
     };
 
     // register socket on event

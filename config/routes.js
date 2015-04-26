@@ -72,11 +72,12 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
+  'post /analyze': 'AnalyzeController.analyze',
+
 
   /**
    * Test Routes
    */
-  'get /analyze-test': 'AnalyzeController.analyze',
   'get /analyze-test-page': {view: 'examples/analyze-test'},
   'get /echarts-test': {view: 'examples/echarts-test'}
 
