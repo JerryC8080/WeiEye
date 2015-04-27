@@ -13,7 +13,13 @@ angular.module('weiEyeApp')
       restrict: 'EA',
       replace: true,
       link: function postLink(scope, element, attrs) {
-        var report = Report.getReport()['user_geo'];
+        var report = null;
+        if (scope.value && scope.key){
+          report = scope.value['user_geo'];
+        }else{
+          report = Report.getReport()['user_geo'];
+        }
+
         if (report){
           element.css('height', 400);
 

@@ -5,6 +5,9 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+
+var reportText = sails.config.report.report_text;
+
 module.exports = {
 	getReportsByStatusID : getReportsByStatusID
 };
@@ -37,12 +40,24 @@ function getReportsByStatusID(req, res) {
     // find reports of status
     return Report.find({status: statusID});
   }).then(function (reports) {
-
-    // group comments by batch
-    if (reports && reports.length > 0){
-      response.reports = _.groupBy(reports, 'batch');
+    if (!reports || reports.length < 0){
+      throw new Error('找不到报告');
     }
 
+    // group comments by batch
+    var groupByBatch = _.groupBy(reports, 'batch');
+    var groupKeys    = _.keys(groupByBatch);
+
+    // compact reports data
+    var responseReport = {};
+    _.map(groupKeys, function (key) {
+      responseReport[key] = {};
+      _.map(groupByBatch[key], function (report) {
+        var reportText = sails.config.report.report_text[report.reportType];
+        responseReport[key][reportText] = report;
+      });
+    });
+    response.reports = responseReport;
     res.json(response);
   }).catch(function (error) {
     sails.log.error(error);

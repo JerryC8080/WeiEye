@@ -7,7 +7,7 @@
       {{status.text}}
     </div>
     <div class="weibo_pic">
-      <img src="{{status.bmiddle_pic}}" alt=""/>
+      <img src="{{status.thumbnail_pic}}" alt=""/>
     </div>
   </div>
 </div>
@@ -33,10 +33,24 @@
   </div>
 </div>
 
-<div class="reports">
-  <div class="report" ng-gender-report></div>
-  <div class="report" ng-geo-report></div>
-  <div class="report" ng-source-report></div>
-  <div class="report" ng-timeline-report></div>
-  <div class="report" ng-verify-report></div>
-</div>
+<accordion close-others="true">
+  <div class="batch" ng-repeat="(key, value) in reports">
+      <accordion-group  is-open="value.open">
+        <accordion-heading>
+          <date-format></date-format>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': value.open, 'glyphicon-chevron-right': !value.open}"></i>
+        </accordion-heading>
+        <div class="reports">
+          <div class="report" ng-gender-report></div>
+          <div class="report" ng-geo-report></div>
+          <div class="report" ng-source-report></div>
+          <div class="report" ng-timeline-report></div>
+          <div class="report" ng-verify-report></div>
+        </div>
+      </accordion-group>
+  </div>
+</accordion>
+
+
+
+

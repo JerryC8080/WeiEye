@@ -34,5 +34,12 @@ module.exports.report = {
       name: 'timeline',
       description: '创建时间分布分析报告'
     }
+  },
+  report_text: {
+    '1': 'user_source',
+    '2': 'user_geo',
+    '3': 'user_gender',
+    '4': 'user_verify',
+    '5': 'timeline'
   }
 };

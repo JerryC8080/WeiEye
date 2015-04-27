@@ -7,13 +7,19 @@
  * # ngGenderReport
  */
 angular.module('weiEyeApp')
-  .directive('ngGenderReport', function ($rootScope, Report) {
+  .directive('ngGenderReport', function ($rootScope, Report, $log) {
     return {
       template: '<div></div>',
       restrict: 'EA',
       replace: true,
       link: function postLink(scope, element, attrs) {
-        var report = Report.getReport()['user_gender'];
+        var report = null;
+        if (scope.value && scope.key){
+          report = scope.value['user_gender'];
+        }else{
+          report = Report.getReport()['user_gender'];
+        }
+
         if (report){
           element.css('height', 400);
 
