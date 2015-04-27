@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'cgNotify'
   ])
   .run(function (CONFIG, User, $http, $log) {
     $http

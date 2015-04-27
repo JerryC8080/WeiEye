@@ -58,7 +58,7 @@ function analyze(statusID, user, type, reportsType, socketID) {
 
     // TODO if type equal 2, it means repost , download it
   }).then(function (objs) {
-    if (!objs){
+    if (!objs || objs.length <= 0){
       throw new Error('下载评论数据失败');
     }
     if (type === 1){

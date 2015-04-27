@@ -8,7 +8,7 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeModalCtrl', function (statusID, $scope, $modalInstance, CONFIG, User, $rootScope, $log, $location, Report, Comment, Status) {
+  .controller('AnalyzeModalCtrl', function (notify, statusID, $scope, $modalInstance, CONFIG, User, $rootScope, $log, $location, Report, Comment, Status) {
 
     $scope.reportTypes = CONFIG.reportTypes;
 
@@ -71,7 +71,7 @@ angular.module('weiEyeApp')
         $scope.$apply();
         $log.info(response.msg);
       }else{
-        $log.error(response.msg);
+        notify({ message: '分析失败,' + response.msg , classes: ['alert-danger']});
         $scope.cancel();
       }
     });
