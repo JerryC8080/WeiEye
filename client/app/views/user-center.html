@@ -7,35 +7,41 @@
     </div>
     <div class="paramter">
 
+      <div class="row username">
+        <div class="col-md-12">{{user.screen_name}}</div>
+      </div>
+
       <div class="row description">
         <div class="col-md-12">{{user.description}}</div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="followers_count">
-            粉丝：<span>{{user.followers_count}}</span>
+      <div class="row count">
+        <div class="col-md-3">
+          <div class="count_num followers_count">
+            <span>{{user.followers_count}}</span>
           </div>
+          <div class="count_text">粉丝</div>
         </div>
-        <div class="col-md-6">
-          <div class="friends_count">
-            关注：<span>{{user.friends_count}}</span>
+        <div class="col-md-3">
+          <div class="count_num friends_count">
+              <span>{{user.friends_count}}</span>
           </div>
+          <div class="count_text">关注</div>
+        </div>
+        <div class="col-md-3">
+          <div class="count_num followers_count">
+            <span>{{user.followers_count}}</span>
+          </div>
+          <div class="count_text">粉丝</div>
+        </div>
+        <div class="col-md-3">
+          <div class="count_num friends_count">
+            <span>{{user.friends_count}}</span>
+          </div>
+          <div class="count_text">关注</div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="followers_count">
-            粉丝：<span>{{user.followers_count}}</span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="friends_count">
-            关注：<span>{{user.friends_count}}</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
