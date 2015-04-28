@@ -28,7 +28,7 @@ module.exports = {
     created_at        : {type: 'datetime'},
     geo               : {model: 'Geo'},     // 地理信息
     user              : {model: 'User'},    // 微博作者
-    retweeted_status  : {model: 'Status'},     // 被转发的原微博信息字段，当该微博为转发微博时返回
+    retweeted_status  : {model: 'Status'}     // 被转发的原微博信息字段，当该微博为转发微博时返回
 
 //    reports           : {model: 'Report'}   // 该条微博下的报告
   }

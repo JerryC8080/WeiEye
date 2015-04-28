@@ -23,6 +23,17 @@ angular.module('adminApp')
         ]
       },
       {
+        id: 3,
+        title: '微博管理',
+        isActive: false,
+        main: [
+          {
+            label: '全部微博',
+            route: '/statuses'
+          },
+        ]
+      },
+      {
         id: 2,
         title: '其他',
         isActive: false,

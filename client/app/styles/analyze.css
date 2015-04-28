@@ -10,8 +10,9 @@ input[type=checkbox] {
   margin-top: 20px;
 }
 
-.checkbox {
+.report_choose > div.checkbox {
   margin: 8px 14px;
+
 }
 
 .checkbox input[type=checkbox]:checked + label {

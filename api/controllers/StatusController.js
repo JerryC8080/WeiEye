@@ -5,7 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-module.exports = {
+module.exports = _.merge(_.cloneDeep(require('./base/count')), {
 	getMyAnalyzeStatus: function (req, res) {
 
     // TODO should close '2254858394'
@@ -36,5 +36,5 @@ module.exports = {
       res.serverError(error);
     })
   }
-};
+});
 

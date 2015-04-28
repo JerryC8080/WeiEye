@@ -1,0 +1,52 @@
+
+
+<section class="content-header clearfix">
+  <h3> 全部微博 </h3>
+</section>
+
+<section class="content table-responsive">
+
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="微博">
+
+    </div>
+  </form>
+  <table class="table">
+    <thead>
+    <tr>
+      <th style="min-width:50px">操作</th>
+      <th style="min-width:45px"> 微博ID</th>
+      <th style="min-width:100px"> 来源</th>
+      <th style="min-width:120px"> 内容</th>
+      <td style="min-width:120px"> 转发数</td>
+      <td style="min-width:120px"> 评论数</td>
+      <td style="min-width:120px"> 表态数</td>
+      <td style="min-width:120px"> 微博作者</td>
+      <td style="min-width:120px"> 转发微博</td>
+      <th style="min-width:150px"> 发表时间</th>
+      <th style="min-width:150px"> 第一次分析时间</th>
+      <th style="min-width:150px"> 最后分析时间</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="status in statuses">
+      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(status.id)">删除</button></td>
+      <td> {{status.id}}</td>
+      <td> {{status.source}}</td>
+      <td> {{status.text}}</td>
+      <td> {{status.reposts_count}}</td>
+      <td> {{status.comments_count}}</td>
+      <td> {{status.attitudes_count}}</td>
+      <td> {{status.user.screen_name}}</td>
+      <td> {{status.retweeted_status}}</td>
+      <td> {{status.created_at | timeFilter}}</td>
+      <td> {{status.createdAt | timeFilter}}</td>
+      <td> {{status.updatedAt | timeFilter}}</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="items_per_page"
+            boundary-links="true" rotate="false"  ng-change="pageChanged()" class="pull-right"></pagination>
