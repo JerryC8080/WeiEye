@@ -1,0 +1,62 @@
+input[type=checkbox] {
+  visibility: hidden;
+}
+#statusUrl {
+  width: 100%;
+}
+
+.report_choose {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.checkbox {
+  margin: 8px 14px;
+}
+
+.checkbox input[type=checkbox]:checked + label {
+  border: 1px solid #337ab7;
+}
+
+.checkbox label {
+  width: 267px;
+  height: 134px;
+}
+
+.analyze_input {
+  margin: 30px 0;
+}
+
+.checkbox .text {
+  margin: 0;
+  padding-right: 40px;
+  line-height: 30px;
+  font-size: 18px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.35);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  top: 10px;
+  left: 30px;
+}
+
+.checkbox label[for=user_gender] {
+  background-image: url('/images/report/user_gender.png');
+}
+
+.checkbox label[for=user_source] {
+  background-image: url('/images/report/user_source.png');
+}
+
+.checkbox label[for=timeline] {
+  background-image: url('/images/report/timeline.png');
+}
+
+.checkbox label[for=user_geo] {
+  background-image: url('/images/report/user_geo.png');
+}
+
+.checkbox label[for=user_verify] {
+  background-image: url('/images/report/user_verified.png');
+}
