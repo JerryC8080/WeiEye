@@ -23,7 +23,7 @@ angular.module('adminApp')
         ]
       },
       {
-        id: 3,
+        id: 1,
         title: '微博管理',
         isActive: false,
         main: [
@@ -35,6 +35,17 @@ angular.module('adminApp')
       },
       {
         id: 2,
+        title: '评论管理',
+        isActive: false,
+        main: [
+          {
+            label: '全部评论',
+            route: '/comments'
+          },
+        ]
+      },
+      {
+        id: 3,
         title: '其他',
         isActive: false,
         main: [

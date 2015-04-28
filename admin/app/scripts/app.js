@@ -47,6 +47,10 @@ angular
         templateUrl: 'views/statuses.html',
         controller: 'StatusesCtrl'
       })
+      .when('/comments', {
+        templateUrl: 'views/comments.html',
+        controller: 'CommentCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

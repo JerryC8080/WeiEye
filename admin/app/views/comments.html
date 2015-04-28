@@ -1,0 +1,46 @@
+
+
+<section class="content-header clearfix">
+  <h3> 全部微博 </h3>
+</section>
+
+<section class="content table-responsive">
+
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="微博">
+
+    </div>
+  </form>
+  <table class="table">
+    <thead>
+    <tr>
+      <th style="min-width:50px">操作</th>
+      <th style="min-width:45px"> 评论ID</th>
+      <th style="min-width:100px"> 来源</th>
+      <th style="min-width:120px"> 内容</th>
+      <td style="min-width:120px"> 微博作者</td>
+      <td style="min-width:120px"> 微博</td>
+      <th style="min-width:150px"> 发表时间</th>
+      <th style="min-width:150px"> 第一次分析时间</th>
+      <th style="min-width:150px"> 最后分析时间</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="comment in comments">
+      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(status.id)">删除</button></td>
+      <td> {{comment.id}}</td>
+      <td> {{comment.source}}</td>
+      <td> {{comment.text}}</td>
+      <td> {{comment.user.screen_name}}</td>
+      <td> {{comment.status.id}}</td>
+      <td> {{comment.created_at | timeFilter}}</td>
+      <td> {{comment.createdAt | timeFilter}}</td>
+      <td> {{comment.updatedAt | timeFilter}}</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="items_per_page"
+            boundary-links="true" rotate="false"  ng-change="pageChanged()" class="pull-right"></pagination>
