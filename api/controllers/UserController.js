@@ -10,7 +10,7 @@ module.exports = _.merge(
 
     // TODO should close '2254858394'
     getCurrentUser: function (req, res) {
-      var user = req.session.passport.user;
+      var user = req.session.passport.user || '2254858394';
       if (!user){
         return res.json('null');
       }

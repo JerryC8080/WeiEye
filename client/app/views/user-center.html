@@ -89,11 +89,11 @@
   <div class="modal-header">
     <h3 class="modal-title">选择分析类型</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body form-inline">
     <div class="checkbox" ng-repeat="type in reportTypes">
-      <label>
-        <input ng-model="type.value" name="{{type.name}}" type="checkbox">{{type.text}}
-      </label>
+      <input type="checkbox" ng-model="type.value" name="{{type.name}}" id="{{type.name}}" value="">
+      <label for="{{type.name}}"></label>
+      <div class="text">{{type.text}}</div>
     </div>
 
     <div class="analyze-log">

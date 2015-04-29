@@ -7,8 +7,9 @@
 .paramter {
   margin-bottom: 10px;
 }
-.paramter div{
-  margin-bottom: 2px;
+.paramter > div{
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
 }
 
 .paramter span{
@@ -23,4 +24,20 @@
 
 .description {
   margin-bottom: 10px;
+}
+
+.username {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  color: #666;
+  text-overflow: ellipsis;
+}
+
+.count {
+  border-bottom: none;
 }
