@@ -55,17 +55,36 @@ function formatProfile(provider, profile) {
       break;
 
     case 'sina':
-      user = _.pick(profile, ['location', 'description']);
+//      user = _.pick(profile, _.keys(User.attributes));
+      user = profile;
       user.id = profile.id;
       user.username = profile.name;
-      user.website = profile.url;
+      user.screen_name = profile.screen_name;
+      user.province = profile.province;
+      user.city = profile.city;
+      user.location = profile.location;
+      user.url = profile.url;
+      user.profile_image_url = profile.profile_image_url;
+      user.profile_url = profile.profile_url;
+      user.domain = profile.domain;
+      user.gender = sex[profile.gender];
+      user.followers_count = profile.followers_count;
+      user.friends_count = profile.friends_count;
+      user.statuses_count = profile.statuses_count;
+      user.favourites_count = profile.favourites_count;
+      user.created_at = profile.created_at;
+      user.verified = profile.verified;
+      user.avatar_large = profile.avatar_large;
+      user.avatar_hd = profile.avatar_hd;
+      user.follow_me = profile.follow_me;
+      user.bi_followers_count = profile.bi_followers_count;
+      user.lang = profile.lang;
       user.description = profile.description;
-      user.figureurl = profile.profile_image_url;
       user.weibo = 'http://www.weibo.com/' + profile.domain;
       user.tags = profile.ability_tags;
       user.location = profile.location;
-      user.domain = profile.domain;
-      user.gender = sex[profile.gender];
+      user.website = profile.url;
+
       break;
 
     case 'douban':

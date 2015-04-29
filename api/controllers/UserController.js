@@ -32,7 +32,7 @@ module.exports = _.merge(
           'created_at',
           'verified'
         ]);
-        if (user.passports[0]){
+        if (user.passports && user.passports[0]){
           _user.access_token = user.passports[0].tokens.accessToken;
         }
         res.json(_user);
