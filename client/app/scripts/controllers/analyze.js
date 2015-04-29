@@ -8,13 +8,20 @@
  * Controller of the weiEyeApp
  */
 angular.module('weiEyeApp')
-  .controller('AnalyzeCtrl', function (User, $rootScope, $log, $scope, $location, Report, Comment, Status) {
+  .controller('AnalyzeCtrl', function (notify, User, $rootScope, $log, $scope, $location, Report, Comment, Status) {
 
     var perStepPercent = 0;
+    var user = User.getUser();
+
+    if (!user.id){
+      notify({ message: '您未登录,无法使用分析功能', classes: ['alert-danger']});
+    }
 
     $scope.processBar = {
       percent: 0
     };
+
+    $rootScope.return_to = '#/analyze';
 
     $scope.formData = {};
 
@@ -22,6 +29,11 @@ angular.module('weiEyeApp')
 
     // do analyze
     $scope.doAnalyze = function () {
+
+      if (!user.id){
+        notify({ message: '您未登录,无法使用分析功能', classes: ['alert-danger']});
+        return ;
+      }
 
       // initialize
       $scope.analyzeLogs = [];

@@ -32,8 +32,8 @@ module.exports.routes = {
    *                                                                          *
    ***************************************************************************/
 
-  '/': 'IndexController.index',
-  '/client/*': {
+//  '/': 'IndexController.index',
+  '/': {
     controller: 'IndexController',
     action: 'client',
     skipAssets: true,

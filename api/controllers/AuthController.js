@@ -1,4 +1,4 @@
-/**
+ /**
  * Authentication Controller
  *
  * This is merely meant as an example of how your Authentication controller
@@ -100,6 +100,8 @@ var AuthController = {
    * @param {Object} res
    */
   provider: function (req, res) {
+    // set return_to to session
+    req.session.return_to = req.query.return_to || '/';
     passport.endpoint(req, res);
   },
 
@@ -163,7 +165,8 @@ var AuthController = {
 
         // Upon successful login, send the user to the homepage were req.user
         // will available.
-        res.redirect('/');
+        var return_to = req.session.return_to;
+        res.redirect(return_to);
       });
     });
   },

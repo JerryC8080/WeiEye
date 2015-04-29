@@ -8,7 +8,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var clientApp = path.resolve(__dirname,'../../.tmp/public/client/index.html');
+var clientApp = path.resolve(__dirname,'../../.tmp/public/index.html');
 var adminApp = path.resolve(__dirname,'../../.tmp/public/admin/index.html');
 
 
