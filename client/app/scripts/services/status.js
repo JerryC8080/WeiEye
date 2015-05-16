@@ -25,9 +25,9 @@ angular.module('weiEyeApp')
             $log.info(res);
             if (res.status === 200){
               return res.data;
+            }else{
+              throw new Error('获取失败');
             }
-          }).catch(function (error) {
-            $log.error(error);
           });
       },
       getTimeline: function (access_token) {
@@ -37,9 +37,9 @@ angular.module('weiEyeApp')
             $log.info(res);
             if (res.status === 200){
               return res.data;
+            }else{
+              throw new Error('获取失败');
             }
-          }).catch(function (error) {
-            $log.error(error);
           });
       }
     };

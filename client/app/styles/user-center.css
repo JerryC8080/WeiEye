@@ -41,3 +41,11 @@
 .count {
   border-bottom: none;
 }
+
+.loading {
+  text-align: center;
+}
+.loading img{
+  height: 150px;
+  width: auto;
+}

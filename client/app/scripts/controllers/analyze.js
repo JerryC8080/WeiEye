@@ -14,7 +14,7 @@ angular.module('weiEyeApp')
     var user = User.getUser();
 
     if (!user.id){
-      notify({ message: '您未登录,无法使用分析功能', classes: ['alert-danger']});
+      notify({ message: '您未登录,无法使用分析功能', classes: ['alert-waring']});
     }
 
     $scope.processBar = {
@@ -71,6 +71,7 @@ angular.module('weiEyeApp')
         $scope.$apply();
         $log.info(response.msg);
       }else{
+        notify({ message: '分析失败，链接超时', classes: ['alert-danger']});
         $log.error(response.msg);
       }
     });
@@ -80,6 +81,9 @@ angular.module('weiEyeApp')
         $scope.processBar.percent = 100;
         $scope.$apply();
         $scope.$emit('AnalyzeCompleted', response.data);
+      }else{
+        notify({ message: '分析失败，请检查网络链接', classes: ['alert-danger']});
+
       }
     });
 

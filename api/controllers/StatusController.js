@@ -9,6 +9,7 @@ module.exports = _.merge(_.cloneDeep(require('./base/count')), {
 	getMyAnalyzeStatus: function (req, res) {
 
     // TODO should close '2254858394'
+//    var user = req.session.passport && req.session.passport.user;
     var user = req.session.passport && req.session.passport.user || '2254858394';
     if (!user){
       return res.forbidden('need login');
@@ -24,6 +25,7 @@ module.exports = _.merge(_.cloneDeep(require('./base/count')), {
   // TODO should close '2254858394'
   getMyTimeline: function (req, res) {
     var user = req.session.passport.user || 2254858394;
+//    var user = req.session.passport.user;
     if (!user){
       return res.forbidden('need login');
     }

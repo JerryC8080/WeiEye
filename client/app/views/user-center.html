@@ -49,6 +49,9 @@
 
     <!-- 我的最新微博 -->
     <h3 class="title">我的最新微博</h3>
+    <div class="loading" ng-if="!timelineStatus">
+      <img src="/images/loading-x.gif" alt="loading"/>
+    </div>
     <div ng-repeat="status in timelineStatus">
       <div class="panel panel-default">
         <div class="weibo panel-body">
@@ -67,6 +70,9 @@
 
     <!-- 我的分析微博 -->
     <h3 class="title">我的分析微博</h3>
+    <div class="loading" ng-if="!analyzeStatus">
+      <img src="/images/loading-x.gif" alt="loading"/>
+    </div>
     <div ng-repeat="status in analyzeStatus">
       <div class="panel panel-default">
         <div class="weibo panel-body">
