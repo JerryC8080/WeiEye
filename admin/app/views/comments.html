@@ -8,7 +8,7 @@
 
   <form class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="微博">
+      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="评论内容">
 
     </div>
   </form>
@@ -17,7 +17,7 @@
     <tr>
       <th style="min-width:50px">操作</th>
       <th style="min-width:45px"> 评论ID</th>
-      <th style="min-width:100px"> 来源</th>
+      <th style="min-width:130px"> 来源</th>
       <th style="min-width:120px"> 内容</th>
       <td style="min-width:120px"> 微博作者</td>
       <td style="min-width:120px"> 微博</td>
@@ -29,9 +29,9 @@
     </thead>
     <tbody>
     <tr ng-repeat="comment in comments">
-      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(status.id)">删除</button></td>
+      <td><button class="btn btn-warning btn-xs" ng-click="deleteUser(comment.id)">删除</button></td>
       <td> {{comment.id}}</td>
-      <td> {{comment.source}}</td>
+      <td ng-bind-html="comment.source"> </td>
       <td> {{comment.text}}</td>
       <td> {{comment.user.screen_name}}</td>
       <td> {{comment.status.id}}</td>

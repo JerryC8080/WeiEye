@@ -8,7 +8,7 @@
 
   <form class="form-inline">
     <div class="form-group">
-      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="微博">
+      <input type="text" class="form-control" id="username" ng-model="query" ng-change="search()" placeholder="微博内容">
 
     </div>
   </form>
@@ -17,7 +17,7 @@
     <tr>
       <th style="min-width:50px">操作</th>
       <th style="min-width:45px"> 微博ID</th>
-      <th style="min-width:100px"> 来源</th>
+      <th style="min-width:130px"> 来源</th>
       <th style="min-width:120px"> 内容</th>
       <td style="min-width:120px"> 转发数</td>
       <td style="min-width:120px"> 评论数</td>
@@ -32,9 +32,9 @@
     </thead>
     <tbody>
     <tr ng-repeat="status in statuses">
-      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(status.id)">删除</button></td>
+      <td><button class="btn btn-warning btn-xs" ng-click="deleteUser(status.id)">删除</button></td>
       <td> {{status.id}}</td>
-      <td> {{status.source}}</td>
+      <td ng-bind-html="status.source"></td>
       <td> {{status.text}}</td>
       <td> {{status.reposts_count}}</td>
       <td> {{status.comments_count}}</td>

@@ -39,7 +39,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="user in users">
-      <td><button class="btn btn-warning btn-xs disabled" ng-click="deleteUser(user.id)">删除</button></td>
+      <td><button class="btn btn-warning btn-xs" ng-click="deleteUser(user.id)">删除</button></td>
       <td> {{$index+1}}</td>
       <td ng-if="user.passports[0]">已授权</td>
       <td ng-if="!user.passports[0]">未授权</td>

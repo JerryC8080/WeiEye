@@ -83,7 +83,7 @@ angular.module('adminApp')
 
       //如果有查询值的话，添加 where 参数
       if ($scope.isQuery) {
-        query.where = {"username": {"contains": $scope.query}};
+        query.where = {"text": {"contains": $scope.query}};
       }
 
       return query;
